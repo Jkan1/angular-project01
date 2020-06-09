@@ -20,7 +20,7 @@ export class RecipeService implements OnInit {
     }
 
     getRecipes(){
-        return this.recipes.splice(0, this.recipes.length);
+        return this.recipes.slice();
     }
 
     onRecipeSelected(recipe: Recipe) {

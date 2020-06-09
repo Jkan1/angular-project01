@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-project01';
-  currentPage: string = "recipe";
+  currentPage: string = "shopping";
 }
