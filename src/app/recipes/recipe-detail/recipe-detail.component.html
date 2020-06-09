@@ -18,7 +18,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" (click)="addIngredientsToShoppingList()" itemPointer >To Shopping List</a>
-                    <a class="dropdown-item" itemPointer >Edit Recipe</a>
+                    <a class="dropdown-item" itemPointer (click)="onEditRecipe()" >Edit Recipe</a>
                     <a class="dropdown-item" itemPointer >Delete Recipe</a>
                 </div>
             </div>
@@ -34,5 +34,5 @@
     </div>
 </div>
 <ng-template #noRecipeDetailsFound>
-    <p>Please Select a Recipe</p>
+    <p>Recipe Details Not Found</p>
 </ng-template>

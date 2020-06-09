@@ -34,6 +34,10 @@ export class RecipeService implements OnInit {
         return this.recipes.slice();
     }
 
+    getRecipeById(id: number) {
+        return this.recipes.slice()[id];
+    }
+
     onRecipeSelected(recipe: Recipe) {
         this.selectReciepe.emit(recipe);
     }

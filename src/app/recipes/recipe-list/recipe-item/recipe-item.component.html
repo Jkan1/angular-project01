@@ -1,7 +1,9 @@
 
 
 <a itemPointer class="list-group-item clearfix"
-    (click)="thisRecipeSelected()">
+    (click)="thisRecipeSelected()"
+    [routerLink]="[recipeIndex]"
+    routerLinkActive="active">
     <div class="float-left">
         <h4>{{recipe.name}}</h4>
         <p>{{recipe.description}}</p>
