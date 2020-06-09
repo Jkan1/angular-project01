@@ -1,12 +1,13 @@
-<div class="row">
-    <div class="col-xs-12 col-md-12">
-        <app-shopping-edit (newIngredientAdded)="onIngAdded($event)"></app-shopping-edit>
-    </div>
-    <hr>
-    <div class="list-group">
-        <a class="list-group-item"
-        *ngFor = "let ing of ingredients">
-        {{ing.name}} {{ing.amount}}
-        </a>
+<div class="container-fluid m-5">
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <app-shopping-edit (newIngredientAdded)="onIngAdded($event)"></app-shopping-edit>
+        </div>
+        <hr>
+        <div class="list-group">
+            <a class="list-group-item" *ngFor="let ing of ingredients">
+                {{ing.name}} {{ing.amount}}
+            </a>
+        </div>
     </div>
 </div>

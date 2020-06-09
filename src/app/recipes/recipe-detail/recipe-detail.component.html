@@ -1,29 +1,35 @@
-<div class="row">
-    <div class="col-xs-12">
-        <img [src]="recipeDetails.imagePath" alt="" class="img-fluid" style="max-height: 200px;">
+<div *ngIf="recipeDetails; else noRecipeDetailsFound">
+    <div class="row">
+        <div class="col-xs-12">
+            <img [src]="recipeDetails.imagePath" alt="" class="img-fluid" style="max-height: 200px;">
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sx-12">
-        <h1>{{recipeDetails.name}}</h1>
+    <div class="row">
+        <div class="col-sx-12">
+            <h1>{{recipeDetails.name}}</h1>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sx-12">
-        <div class="btn-group" appDropdown>
-            <button type="button" class="btn btn-primary dropdown-toggle">
-                Manage Recipe <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">To Shopping List</a></li>
-                <li><a href="#">Edit Recipe</a></li>
-                <li><a href="#">Delete Recipe</a></li>
-            </ul>
+    <div class="row">
+        <div class="col-sx-12">
+            <div class="dropdown open" appDropdown>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Manage Recipe
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">To Shopping List</a>
+                    <a class="dropdown-item" href="#">Edit Recipe</a>
+                    <a class="dropdown-item" href="#">Delete Recipe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            {{recipeDetails.description}}
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-xs-12">
-        {{recipeDetails.description}}
-    </div>
-</div>
+<ng-template #noRecipeDetailsFound>
+    <p>Please Select a Recipe</p>
+</ng-template>
