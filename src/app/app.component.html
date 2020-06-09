@@ -4,8 +4,7 @@
     <div class="col-md-12" >
       <app-header (pageChanged)="currentPage = $event"></app-header>
       
-      <app-recipes *ngIf="currentPage === 'recipe'"></app-recipes>
-      <app-shopping-list *ngIf="currentPage != 'recipe'"></app-shopping-list>
+      <router-outlet></router-outlet>
     </div>
   </div> 
 </div>
