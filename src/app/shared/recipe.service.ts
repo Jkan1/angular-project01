@@ -1,4 +1,4 @@
-import { Injectable, OnInit, EventEmitter } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { Recipe } from '../recipes/recipe.model';
 import { Ingredient } from './ingredient.model';
 
@@ -22,8 +22,6 @@ export class RecipeService implements OnInit {
             ])
     ];
 
-    selectReciepe = new EventEmitter<Recipe>();
-
     constructor() { }
 
     ngOnInit() {
@@ -38,8 +36,5 @@ export class RecipeService implements OnInit {
         return this.recipes.slice()[id];
     }
 
-    onRecipeSelected(recipe: Recipe) {
-        this.selectReciepe.emit(recipe);
-    }
 
 }
