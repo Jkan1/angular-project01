@@ -1,34 +1,61 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingService } from 'src/app/shared/shopping.service';
+import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css']
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent implements OnInit, OnDestroy {
 
-  @ViewChild('nameInput', { static: true }) nameInput: ElementRef;
-  @ViewChild('amountInput', { static: true }) amountInput: ElementRef;
+  @ViewChild('f', { static: false }) form1: NgForm;
 
+  subscription: Subscription;
+  editMode: boolean = false;
+  editedItemIndex: number;
+  editedItem: Ingredient;
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit(): void {
+    this.subscription = this.shoppingService.startedEditingEvent.subscribe(
+      (index: number) => {
+        this.editMode = true;
+        this.editedItemIndex = index;
+        this.editedItem = this.shoppingService.getIng(index);
+        this.form1.setValue({
+          name: this.editedItem.name,
+          amount: this.editedItem.amount
+        });
+      }
+    )
   }
 
-  onSubmit() {
-    const iName = this.nameInput.nativeElement.value;
-    if (!iName) {
-      return;
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  onSubmit(form: NgForm) {
+    const value = form.value;
+    const newIng = new Ingredient(value.name, value.amount);
+    if (this.editMode) {
+      this.shoppingService.updateIng(this.editedItemIndex, newIng);
+    } else {
+      this.shoppingService.addIngredient(newIng);
     }
-    const iAmount = this.amountInput.nativeElement.value;
-    const newIng = new Ingredient(iName, iAmount);
-    this.shoppingService.addIngredient(newIng);
+    this.editMode = false;
+    form.reset()
   }
+
   onClear() {
-    this.nameInput.nativeElement.value = '';
-    this.amountInput.nativeElement.value = '';
+    this.editMode = false;
+    this.form1.reset();
   }
-  onDelete() { }
+
+  onDelete() { 
+    this.shoppingService.deleteIng(this.editedItemIndex);
+    this.onClear();
+  }
 }

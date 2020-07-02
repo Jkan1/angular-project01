@@ -5,7 +5,8 @@
         </div>
         <hr>
         <div class="list-group">
-            <a class="list-group-item" *ngFor="let ing of ingredients">
+            <a class="list-group-item" *ngFor="let ing of ingredients; let i = index"
+                (click)="onEditItem(i)">
                 {{ing.name}} {{ing.amount}}
             </a>
         </div>

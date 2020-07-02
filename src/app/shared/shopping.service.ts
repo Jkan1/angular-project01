@@ -13,6 +13,7 @@ export class ShoppingService implements OnInit {
     ];
 
     ingredientEvent = new Subject<Ingredient[]>();
+    startedEditingEvent = new Subject<number>();
 
     constructor() { }
 
@@ -27,5 +28,18 @@ export class ShoppingService implements OnInit {
         this.ingredientEvent.next(this.ingredients.slice());
     }
 
+    getIng(index: number) {
+        return this.ingredients[index];
+    }
+
+    updateIng(index: number, newIng: Ingredient) {
+        this.ingredients[index] = newIng;
+        this.ingredientEvent.next(this.ingredients.slice());
+    }
+
+    deleteIng(index:number){
+        this.ingredients.splice(index,1);
+        this.ingredientEvent.next(this.ingredients.slice());
+    }
 
 }
