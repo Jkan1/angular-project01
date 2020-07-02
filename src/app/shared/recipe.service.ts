@@ -1,9 +1,12 @@
 import { Injectable, OnInit } from "@angular/core";
 import { Recipe } from '../recipes/recipe.model';
 import { Ingredient } from './ingredient.model';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class RecipeService implements OnInit {
+
+    recipeEvent = new Subject<Recipe[]>();
 
     private recipes: Recipe[] = [
         new Recipe("Apple Pie",
@@ -22,6 +25,10 @@ export class RecipeService implements OnInit {
             ])
     ];
 
+    emitRecipes() {
+        this.recipeEvent.next(this.recipes.slice());
+    }
+
     constructor() { }
 
     ngOnInit() {
@@ -36,5 +43,19 @@ export class RecipeService implements OnInit {
         return this.recipes.slice()[id];
     }
 
+    addRecipe(recipe: Recipe) {
+        this.recipes.push(recipe);
+        this.emitRecipes();
+    }
+
+    updateRecipe(index: number, newRecipe: Recipe) {
+        this.recipes[index] = newRecipe;
+        this.emitRecipes();
+    }
+
+    deleteRecipe(index: number) {
+        this.recipes.splice(index, 1);
+        this.emitRecipes();
+    }
 
 }
