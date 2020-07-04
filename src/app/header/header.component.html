@@ -8,16 +8,18 @@
             <a class="nav-link" routerLinkActive="active" routerLink="/recipes">Recipes </a>
             </li>
             <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/auth']">Authenticate</a>
+            </li>
+            <li class="nav-item">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/shopping']">Shopping List</a>
             </li>
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" itemPointer id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown link
+                Firebase
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" itemPointer >Action</a>
-                <a class="dropdown-item" itemPointer >Another action</a>
-                <a class="dropdown-item" itemPointer >Something else here</a>
+                <a class="dropdown-item" itemPointer (click)="onSaveRecipe()" >Save Data</a>
+                <a class="dropdown-item" itemPointer (click)="onFetchRecipe()">Fetch Data</a>
             </div>
             </li>
         </ul>

@@ -6,6 +6,10 @@
 */
 {
   "files": [],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "es2015"
+  },
   "references": [
     {
       "path": "./tsconfig.app.json"
