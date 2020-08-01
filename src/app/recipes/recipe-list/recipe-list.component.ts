@@ -40,9 +40,9 @@ import { trigger, state, style, transition, animate, keyframes, group } from '@a
       //   'border-radius':'50px'
       // })))
       transition('shrunk <=> *', [
-        // style({
-        //   'background-color':'orange'
-        // }),
+        style({
+          'border-radius': '0px'
+        }),
         // animate(1000),
         animate(1000, style({
           'background-color': 'orange',
