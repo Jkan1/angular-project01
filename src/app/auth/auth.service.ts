@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { User } from './user.model';
+import { environment } from 'src/environments/environment';
 
 export interface AuthResponseData {
     idToken: string;
@@ -16,9 +17,9 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    private signupUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC0rQyoGwBIhqgSyM_BOTGz_UN6jO8hCQ8";
+    private signupUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + environment.firebaseApiKey;
 
-    private loginUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC0rQyoGwBIhqgSyM_BOTGz_UN6jO8hCQ8";
+    private loginUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + environment.firebaseApiKey;
 
     user = new BehaviorSubject<User>(null);
 
@@ -42,16 +43,16 @@ export class AuthService {
         }).pipe(catchError(this.handleError), tap((response) => { this.handleData(response) }));
     }
 
-    logout(){
+    logout() {
         this.user.next(null);
         localStorage.clear();
-        if(this.tokenExpTimer){
+        if (this.tokenExpTimer) {
             clearTimeout(this.tokenExpTimer);
         }
         this.tokenExpTimer = null;
     }
 
-    private handleError(errorRes){
+    private handleError(errorRes) {
         let eMessage = "An Unknown Error Occured";
         if (!errorRes.error || !errorRes.error.error) {
             return throwError(eMessage);
@@ -75,16 +76,16 @@ export class AuthService {
         const newUser = new User(response.email, response.localId, response.idToken, expiryDate);
         this.user.next(newUser);
         this.autoLogout(parseInt(response.expiresIn) * 1000);
-        localStorage.setItem('userData', JSON.stringify(newUser));   
+        localStorage.setItem('userData', JSON.stringify(newUser));
     }
 
-    autoLogin(){
+    autoLogin() {
         const userData = JSON.parse(localStorage.getItem('userData'));
-        if (!userData){
+        if (!userData) {
             return;
         }
         const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpiry));
-        if(loadedUser.token){
+        if (loadedUser.token) {
             this.user.next(loadedUser);
             let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
             this.autoLogout(newExpTime);
