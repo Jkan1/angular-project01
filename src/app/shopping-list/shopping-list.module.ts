@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
         SharedModule,
         FormsModule,
         RouterModule.forChild([
-            { path: "", component: ShoppingListComponent },
+            { path: '', component: ShoppingListComponent },
         ])
     ]
 })
