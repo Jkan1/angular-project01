@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 // import { shoppingListReducer } from './shopping-list/shopping-list.reducer';
 import { AppReducer } from './store/app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
+import { RecipeEffects } from './recipes/store/recipe.effects';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { AuthEffects } from './auth/store/auth.effects';
     HttpClientModule,
     AuthModule,
     StoreModule.forRoot(AppReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, RecipeEffects]),
     SharedModule,
     CoreModule,
     BrowserAnimationsModule

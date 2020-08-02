@@ -25,7 +25,8 @@ export class AuthEffects {
             email: email,
             userId: localId,
             token: idToken,
-            expDate: expiryDate
+            expDate: expiryDate,
+            redirect: true
         });
     }
 
@@ -99,8 +100,10 @@ export class AuthEffects {
     @Effect({ dispatch: false })
     authSuccess = this.action$.pipe(
         ofType(AUTH_SUCCESS),
-        tap(() => {
-            this.router.navigate(['/']);
+        tap((authState: AuthSuccess) => {
+            if (authState.payload.redirect) {
+                this.router.navigate(['/']);
+            }
         })
     );
 
@@ -127,7 +130,8 @@ export class AuthEffects {
                     email: loadedUser.email,
                     userId: loadedUser.id,
                     token: loadedUser.token,
-                    expDate: new Date(userData._tokenExpiry)
+                    expDate: new Date(userData._tokenExpiry),
+                    redirect:false
                 });
                 // let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
                 // this.autoLogout(newExpTime);

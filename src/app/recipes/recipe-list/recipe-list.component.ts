@@ -2,9 +2,12 @@ import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/cor
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Recipe } from '../recipe.model';
-import { RecipeService } from 'src/app/shared/recipe.service';
+// import { RecipeService } from 'src/app/shared/recipe.service';
 import { Subscription } from 'rxjs';
 import { trigger, state, style, transition, animate, keyframes, group } from '@angular/animations';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
@@ -113,13 +116,18 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   wState = "normal";
 
   constructor(
-    private recipeService: RecipeService,
+    // private recipeService: RecipeService,
     private routerService: Router,
-    private activeRoute: ActivatedRoute) { }
+    private activeRoute: ActivatedRoute,
+    private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.recipes = this.recipeService.getRecipes();
-    this.subscription = this.recipeService.recipeEvent.subscribe(
+    console.log("CALLED");
+    // this.recipes = this.recipeService.getRecipes();
+    // this.subscription = this.recipeService.recipeEvent.subscribe(
+    this.subscription = this.store.select('recipes').pipe(
+      map(recipeState => recipeState.recipes)
+      ).subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
         // this.state = this.state == 'high' ? 'normal' : 'high';
