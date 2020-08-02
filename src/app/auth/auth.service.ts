@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { catchError, tap } from 'rxjs/operators';
-import { throwError, BehaviorSubject } from 'rxjs';
+// import { catchError, tap } from 'rxjs/operators';
+// import { throwError, BehaviorSubject } from 'rxjs';
 import { User } from './user.model';
-import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
 import { AuthSuccess, Logout } from '../auth/store/auth.actions';
@@ -20,9 +20,9 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    private signupUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + environment.firebaseApiKey;
+    // private signupUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + environment.firebaseApiKey;
 
-    private loginUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + environment.firebaseApiKey;
+    // private loginUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + environment.firebaseApiKey;
 
     // user = new BehaviorSubject<User>(null);
 
@@ -46,15 +46,15 @@ export class AuthService {
     //     }).pipe(catchError(this.handleError), tap((response) => { this.handleData(response) }));
     // }
 
-    logout() {
-        // this.user.next(null);
-        this.store.dispatch(new Logout());
-        localStorage.clear();
-        if (this.tokenExpTimer) {
-            clearTimeout(this.tokenExpTimer);
-        }
-        this.tokenExpTimer = null;
-    }
+    // logout() {
+    //     // this.user.next(null);
+    //     this.store.dispatch(new Logout());
+    //     localStorage.clear();
+    //     if (this.tokenExpTimer) {
+    //         clearTimeout(this.tokenExpTimer);
+    //     }
+    //     this.tokenExpTimer = null;
+    // }
 
     // private handleError(errorRes) {
     //     let eMessage = "An Unknown Error Occured";
@@ -89,31 +89,39 @@ export class AuthService {
     //     localStorage.setItem('userData', JSON.stringify(newUser));
     // }
 
-    autoLogin() {
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        if (!userData) {
-            return;
-        }
-        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpiry));
-        if (loadedUser.token) {
-            // this.user.next(loadedUser);
-            this.store.dispatch(new AuthSuccess({
-                email: loadedUser.email,
-                userId: loadedUser.id,
-                token: loadedUser.token,
-                expDate: new Date(userData._tokenExpiry)
-            }));
-            let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
-            this.autoLogout(newExpTime);
-        }
-    }
+    // autoLogin() {
+    //     const userData = JSON.parse(localStorage.getItem('userData'));
+    //     if (!userData) {
+    //         return;
+    //     }
+    //     const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpiry));
+    //     if (loadedUser.token) {
+    //         // this.user.next(loadedUser);
+    //         this.store.dispatch(new AuthSuccess({
+    //             email: loadedUser.email,
+    //             userId: loadedUser.id,
+    //             token: loadedUser.token,
+    //             expDate: new Date(userData._tokenExpiry)
+    //         }));
+    //         let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
+    //         this.autoLogout(newExpTime);
+    //     }
+    // }
 
-    autoLogout(expirationTime: number) {
+    setLogoutTimer(expirationTime: number) {
         this.tokenExpTimer = setTimeout(
             () => {
-                this.logout();
+                // this.logout();
+                this.store.dispatch(new Logout());
             }, expirationTime
         );
+    }
+
+    clearLogoutTimer(){
+        if(this.tokenExpTimer){
+            clearTimeout(this.tokenExpTimer);
+            this.tokenExpTimer = null;
+        }
     }
 
 }

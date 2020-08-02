@@ -43,13 +43,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     onLogout() {
-        this.authService.logout();
-        this.router.navigate(['/auth']);
+        // this.authService.logout();
+        // this.router.navigate(['/auth']);
+        this.store.dispatch(new Logout());
     }
 
     onSaveRecipe() {
-        // this.dataService.storeRecipes();
-        this.store.dispatch(new Logout());
+        this.dataService.storeRecipes();
     }
 
     onFetchRecipe() {

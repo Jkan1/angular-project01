@@ -1,5 +1,5 @@
 import { Actions, ofType, Effect } from '@ngrx/effects';
-import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_START, SignupStart, LOGOUT } from './auth.actions'
+import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_START, SignupStart, LOGOUT, AUTO_LOGIN } from './auth.actions'
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -7,6 +7,8 @@ import { of } from 'rxjs';
 import { AuthResponseData } from '../auth.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../user.model';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class AuthEffects {
@@ -16,6 +18,9 @@ export class AuthEffects {
 
     private handleAuthentication = (expiresIn, email, localId, idToken) => {
         let expiryDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
+        const newUser = new User(email, localId, idToken, expiryDate);
+        localStorage.setItem('userData', JSON.stringify(newUser));
+        this.authService.setLogoutTimer(+expiresIn * 1000);
         return new AuthSuccess({
             email: email,
             userId: localId,
@@ -46,7 +51,7 @@ export class AuthEffects {
     @Effect()
     authSignup = this.action$.pipe(
         ofType(SIGNUP_START),
-        switchMap((signupAction: SignupStart)=>{
+        switchMap((signupAction: SignupStart) => {
             return this.httpClient.post<AuthResponseData>(this.signupUrl, {
                 email: signupAction.payload.email,
                 password: signupAction.payload.password,
@@ -93,11 +98,56 @@ export class AuthEffects {
 
     @Effect({ dispatch: false })
     authSuccess = this.action$.pipe(
-        ofType(AUTH_SUCCESS, LOGOUT),
+        ofType(AUTH_SUCCESS),
         tap(() => {
             this.router.navigate(['/']);
         })
     );
 
-    constructor(private action$: Actions, private httpClient: HttpClient, private router: Router) { }
+    @Effect()
+    authAutoLogin = this.action$.pipe(
+        ofType(AUTO_LOGIN),
+        map(() => {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (!userData) {
+                return { type: "NONE" };
+            }
+            const loadedUser = new User(
+                userData.email,
+                userData.id,
+                userData._token,
+                new Date(userData._tokenExpiry)
+            );
+
+            if (loadedUser.token) {
+                // this.user.next(loadedUser);
+                let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
+                this.authService.setLogoutTimer(newExpTime);
+                return new AuthSuccess({
+                    email: loadedUser.email,
+                    userId: loadedUser.id,
+                    token: loadedUser.token,
+                    expDate: new Date(userData._tokenExpiry)
+                });
+                // let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
+                // this.autoLogout(newExpTime);
+            }
+            return { type: 'NONE' }
+        })
+    )
+
+    @Effect({ dispatch: false })
+    authLogout = this.action$.pipe(
+        ofType(LOGOUT),
+        tap(() => {
+            localStorage.clear();
+            this.router.navigate(['/auth']);
+        })
+    )
+
+    constructor(
+        private action$: Actions,
+        private httpClient: HttpClient,
+        private router: Router,
+        private authService: AuthService) { }
 }
