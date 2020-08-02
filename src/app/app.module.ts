@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -12,6 +13,7 @@ import { CoreModule } from './core.module';
 import { AuthModule } from './auth/auth.module';
 // import { shoppingListReducer } from './shopping-list/shopping-list.reducer';
 import { AppReducer } from './store/app.reducer';
+import { AuthEffects } from './auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { AppReducer } from './store/app.reducer';
     HttpClientModule,
     AuthModule,
     StoreModule.forRoot(AppReducer),
+    EffectsModule.forRoot([AuthEffects]),
     SharedModule,
     CoreModule,
     BrowserAnimationsModule

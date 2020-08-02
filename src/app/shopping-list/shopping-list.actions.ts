@@ -1,12 +1,12 @@
 import { Action } from '@ngrx/store';
 import { Ingredient } from '../shared/ingredient.model';
 
-export const ADD_ING = 'ADD_ING';
-export const ADD_ING_MULTI = 'ADD_ING_MULTI';
-export const UPDATE_ING = 'UPDATE_ING';
-export const DELETE_ING = 'DELETE_ING';
-export const START_EDIT = 'START_EDIT';
-export const STOP_EDIT = 'STOP_EDIT';
+export const ADD_ING = '[SL] ADD_ING';
+export const ADD_ING_MULTI = '[SL] ADD_ING_MULTI';
+export const UPDATE_ING = '[SL] UPDATE_ING';
+export const DELETE_ING = '[SL] DELETE_ING';
+export const START_EDIT = '[SL] START_EDIT';
+export const STOP_EDIT = '[SL] STOP_EDIT';
 
 export class AddIng implements Action {
     readonly type = ADD_ING;
