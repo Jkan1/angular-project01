@@ -7,7 +7,7 @@ import { ShoppingService } from 'src/app/shared/shopping.service';
 import { Store } from '@ngrx/store';
 // import { Ingredient } from 'src/app/shared/ingredient.model';
 import * as ShoppingListActions from '../../shopping-list/shopping-list.actions';
-import { AppState } from 'src/app/shopping-list/shopping-list.reducer';
+import { AppState } from '../../store/app.reducer';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -18,7 +18,7 @@ import { AppState } from 'src/app/shopping-list/shopping-list.reducer';
 export class RecipeDetailComponent implements OnInit {
 
   recipeDetails: Recipe;
-  id: number;
+  id: number;  
 
   constructor(private recipeService: RecipeService,
     private shoppingService: ShoppingService,

@@ -8,9 +8,9 @@ export interface State {
     editIndex: number;
 }
 
-export interface AppState {
-    shoppingList: State;
-}
+// export interface AppState {
+//     shoppingList: State;
+// }
 
 const initialState: State = {
     ingredients: [
