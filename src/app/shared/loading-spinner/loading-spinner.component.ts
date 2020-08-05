@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 
-// <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 
 @Component({
     selector:"loading-spinner",

@@ -1,5 +1,4 @@
 import { Actions, ofType, Effect } from '@ngrx/effects';
-import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_START, SignupStart, LOGOUT, AUTO_LOGIN } from './auth.actions'
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -9,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../user.model';
 import { AuthService } from '../auth.service';
+import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_START, SignupStart, LOGOUT, AUTO_LOGIN } from './auth.actions'
 
 @Injectable()
 export class AuthEffects {
@@ -123,7 +123,6 @@ export class AuthEffects {
             );
 
             if (loadedUser.token) {
-                // this.user.next(loadedUser);
                 let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
                 this.authService.setLogoutTimer(newExpTime);
                 return new AuthSuccess({
@@ -133,8 +132,6 @@ export class AuthEffects {
                     expDate: new Date(userData._tokenExpiry),
                     redirect:false
                 });
-                // let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
-                // this.autoLogout(newExpTime);
             }
             return { type: 'NONE' }
         })

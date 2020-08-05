@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { RecipeModule } from './recipes/recipe.module';
 
 
 const appRoutes: Routes = [

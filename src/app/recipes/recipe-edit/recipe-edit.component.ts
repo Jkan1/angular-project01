@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { RecipeService } from 'src/app/shared/recipe.service';
 import { Recipe } from '../recipe.model';
 import { AppState } from 'src/app/store/app.reducer';
 import { Store } from '@ngrx/store';
@@ -31,8 +30,8 @@ export class RecipeEditComponent implements OnInit,OnDestroy {
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private recipeService: RecipeService,
-    private store: Store<AppState>) { }
+    private store: Store<AppState>
+  ) { }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe(
@@ -50,7 +49,6 @@ export class RecipeEditComponent implements OnInit,OnDestroy {
     let desc = '';
     let recipeIng = new FormArray([]);
     if (this.editMode) {
-      // let recipeObj = this.recipeService.getRecipeById(this.id);
       this.storeSub = this.store.select('recipes').pipe(map((recipeState) => {
         return recipeState.recipes.find((recipe,index)=>{
           return index === this.id;
@@ -91,10 +89,8 @@ export class RecipeEditComponent implements OnInit,OnDestroy {
       this.recipeForm.value['ingredientsArray']
     );
     if (this.editMode) {
-      // this.recipeService.updateRecipe(this.id, newRecipe);
       this.store.dispatch(new UpdateRecipe({ index: this.id, recipe: newRecipe }));
     } else {
-      // this.recipeService.addRecipe(newRecipe);
       this.store.dispatch(new AddRecipe(newRecipe));
     }
     this.onCancel();
@@ -117,7 +113,6 @@ export class RecipeEditComponent implements OnInit,OnDestroy {
   }
 
   onCancel() {
-    // this.recipeForm.reset();
     this.router.navigate(['../'], { relativeTo: this.activeRoute });
   }
 
