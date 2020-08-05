@@ -1,7 +1,7 @@
 <div class="container edit-container">
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" [@recipe-edit]="">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="padding: 5px;">
                 <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Save</button>
                 <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
             </div>
@@ -56,7 +56,7 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12 mb-2">
                 <button class="btn btn-success" (click)="onAddIng()" type="button">
                     Add Ingredient
                 </button>

@@ -1,11 +1,14 @@
 <div class="container-fluid m-5">
-    <div class="row">
+    <div class="row" 
+        style="padding: 12px;">
+        <h3>Your Shopping List</h3>
         <div class="col-xs-12 col-md-12">
             <app-shopping-edit></app-shopping-edit>
         </div>
         <hr>
-        <div class="list-group">
-            <a class="list-group-item" *ngFor="let ing of (ingredients | async).ingredients; let i = index"
+        <div class="list-group" 
+            style="margin-top:10px">
+            <a itemPointer class="list-group-item" *ngFor="let ing of (ingredients | async).ingredients; let i = index"
                 (click)="onEditItem(i)">
                 {{ing.name}} {{ing.amount}}
             </a>

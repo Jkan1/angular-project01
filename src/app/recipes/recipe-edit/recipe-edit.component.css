@@ -5,6 +5,11 @@ textarea.ng-invalid.ng-touched {
 }
 
 .edit-container {
-    border: 10px solid black;
-    background-color: chartreuse;
+    border: 1px solid black;
+    background-color: rgb(131, 211, 155);
+}
+
+.btn {
+    margin-left: 5px;
+    margin-right: 5px;
 }
