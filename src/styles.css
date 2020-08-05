@@ -5,4 +5,9 @@
 html, body {
     height: 90%;
     max-height: 90%;
+    background-color: rgb(131, 211, 155);
+}
+
+.container {
+    background-color: white;
 }

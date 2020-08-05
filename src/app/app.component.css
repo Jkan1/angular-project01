@@ -1,4 +1,5 @@
 
-.web-container {
-    background-color: rgb(231, 154, 255);
+.home-container {
+    margin-top: 30px;
+    min-height: 90vh;
 }

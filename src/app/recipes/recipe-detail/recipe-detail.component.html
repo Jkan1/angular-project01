@@ -1,38 +1,53 @@
-<div *ngIf="recipeDetails; else noRecipeDetailsFound" [@recipe-detail]="animationState">
-    <div class="row">
-        <div class="col-xs-12">
-            <img [src]="recipeDetails.imagePath" alt="" class="img-fluid" style="max-height: 200px;">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sx-12">
-            <h1>{{recipeDetails.name}}</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sx-12">
-            <div class="dropdown open" appDropdown>
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Manage Recipe
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" (click)="addIngredientsToShoppingList()" itemPointer >To Shopping List</a>
-                    <a class="dropdown-item" itemPointer (click)="onEditRecipe()" >Edit Recipe</a>
-                    <a class="dropdown-item" itemPointer (click)="onDeleteRecipe()">Delete Recipe</a>
+
+    <div 
+    *ngIf="recipeDetails; else noRecipeDetailsFound" 
+    [@recipe-detail]="animationState"
+    class="container edit-container"
+    style="background-color: black; color:white; height: 100%; padding: 20px;">
+
+        <!-- <div class="row"> -->
+            <div class="col-xs-12 " style="text-align: center;">
+                <img [src]="recipeDetails.imagePath" alt="" class="img-fluid" style=" max-height: 300px;">
+            </div>
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+            <div class="col-sx-12">
+                <h1>{{recipeDetails.name}}</h1>
+            </div>
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+            <div class="col-sx-12">
+                <div class="dropdown open" appDropdown>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Manage Recipe
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" (click)="addIngredientsToShoppingList()" itemPointer >To Shopping List</a>
+                        <a class="dropdown-item" itemPointer (click)="onEditRecipe()" >Edit Recipe</a>
+                        <a class="dropdown-item" itemPointer (click)="onDeleteRecipe()">Delete Recipe</a>
+                    </div>
                 </div>
             </div>
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+            <div class="col-xs-12">
+                <p style="text-align: left; margin-top:10px;margin-bottom: 15px;">
+                    {{recipeDetails.description}}
+                </p>
+            </div>
+        <!-- </div> -->
+        <div class="list-group">
+            <div 
+            class="list-group-item" 
+            style="color: black;" 
+            *ngFor="let Item of recipeDetails.ingredients">
+            {{Item.name}} - {{Item.amount}} 
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            {{recipeDetails.description}}
-        </div>
-    </div>
-    <div class="list-group">
-        <div class="list-group-item" *ngFor="let Item of recipeDetails.ingredients">{{Item.name}} - {{Item.amount}} </div>
-    </div>
+
 </div>
+
 <ng-template #noRecipeDetailsFound>
     <p>Recipe Details Not Found</p>
 </ng-template>

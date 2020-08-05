@@ -6,14 +6,32 @@ import { AppPlaceholderDirective } from '../shared/placeholder/placeholder.direc
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
 import { LoginStart, SignupStart, ClearError } from './store/auth.actions'
+import { trigger, transition, style, animate, state } from '@angular/animations';
+
+
+const animations = [
+    trigger('formAnimation', [
+      state('login',style({
+        "opacity": 1
+      })),
+      transition('* => login,* => signup', [
+        style({
+          "opacity": 0
+        }),
+        animate(300)
+      ])
+    ])
+  ]
 
 @Component({
     selector: 'app-auth',
-    templateUrl: './auth.component.html'
+    templateUrl: './auth.component.html',
+    animations: animations
 })
 export class AuthComponent implements OnInit, OnDestroy {
     isLoginMode: boolean = true;
     isLoading:boolean = false;
+    animationState = 'login'
     @ViewChild(AppPlaceholderDirective) alertHost: AppPlaceholderDirective;
 
     private closeSub: Subscription;
@@ -25,11 +43,13 @@ export class AuthComponent implements OnInit, OnDestroy {
     ) { }
 
     onSwitchMode() {
+        this.animationState = this.animationState === 'login' ? 'signup' : 'login';
         this.isLoginMode = !this.isLoginMode;
     }
 
     ngOnInit() {
-        this.storeSub = this.store.select('auth').subscribe((authState) => { 
+        this.storeSub = this.store.select('auth').subscribe((authState) => {
+            console.log(authState.loading,this.animationState); 
             this.isLoading = authState.loading;
             if (authState.authError)
                 this.onShowError(authState.authError);

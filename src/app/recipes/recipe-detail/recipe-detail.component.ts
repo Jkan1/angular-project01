@@ -29,7 +29,7 @@ const animations = [
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styles: [ ],
+  styles: ['./recipe-detail.component.css'],
   animations: animations
 })
 export class RecipeDetailComponent implements OnInit {

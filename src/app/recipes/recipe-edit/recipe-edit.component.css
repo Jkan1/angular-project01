@@ -1,4 +1,10 @@
+
 input.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched {
     border: 1px solid red;
+}
+
+.edit-container {
+    border: 10px solid black;
+    background-color: chartreuse;
 }
