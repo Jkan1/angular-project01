@@ -7,8 +7,9 @@ import { Logout } from '../auth/store/auth.actions';
 import { FetchRecipes, StoreRecipes } from '../recipes/store/recipe.actions';
 
 @Component({
-    selector: "app-header",
-    templateUrl: "./header.component.html"
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.style.css']
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {

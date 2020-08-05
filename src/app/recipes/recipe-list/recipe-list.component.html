@@ -1,22 +1,14 @@
-<div class="row" [@divState]="state" (@divState.start)="onAnimStart($event)" (@divState.done)="onAnimDone($event)" >
+<div class="row">
     <div class="col-sx-12">
         <button class="btn btn-primary" (click)="onAddRecipe()">Add Recipe</button>
-    </div>
-</div>
-<br>
-<div class="row" [@wildState]="wState">
-    <div class="col-sx-12">
-        <button class="btn btn-primary" (click)="animate()">Animate</button>
-        <button class="btn btn-primary" (click)="shrunk()">shrunk</button>
     </div>
 </div>
 <hr>
 <div class="row">
     <div class="col-xs-12">
 
-            <app-recipe-item [@list2]=""
-            *ngFor="let recipe of recipes; let i = index;" [recipe]="recipe" [index]="i">
-            </app-recipe-item>
+        <app-recipe-item *ngFor="let recipe of recipes; let i = index;" [recipe]="recipe" [index]="i">
+        </app-recipe-item>
 
     </div>
 </div>

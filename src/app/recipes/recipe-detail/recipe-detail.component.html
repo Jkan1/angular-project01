@@ -1,4 +1,4 @@
-<div *ngIf="recipeDetails; else noRecipeDetailsFound">
+<div *ngIf="recipeDetails; else noRecipeDetailsFound" [@recipe-detail]="animationState">
     <div class="row">
         <div class="col-xs-12">
             <img [src]="recipeDetails.imagePath" alt="" class="img-fluid" style="max-height: 200px;">

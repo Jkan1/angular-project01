@@ -7,12 +7,30 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { UpdateRecipe, AddRecipe } from '../store/recipe.actions';
 import { Subscription } from 'rxjs';
+import { trigger, transition, style, animate, state } from '@angular/animations';
 
+
+const animations = [
+  trigger('recipe-edit', [
+    state('normal',style({
+      "opacity": 1,
+      'transform': "translateX(0)"
+    })),
+    transition('* <=> *', [
+      style({
+        "opacity": 0,
+        'transform': "translateX(-100px)"
+      }),
+      animate(500)
+    ])
+  ])
+]
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.css']
+  styleUrls: ['./recipe-edit.component.css'],
+  animations: animations
 })
 export class RecipeEditComponent implements OnInit,OnDestroy {
 

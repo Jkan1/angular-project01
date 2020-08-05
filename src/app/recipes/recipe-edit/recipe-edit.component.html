@@ -1,5 +1,5 @@
 <div class="container">
-    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" [@recipe-edit]="">
         <div class="row">
             <div class="col-xs-12">
                 <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Save</button>

@@ -7,17 +7,36 @@ import { AddIngMulti } from '../../shopping-list/shopping-list.actions';
 import { DeleteRecipe } from '../store/recipe.actions';
 import { AppState } from '../../store/app.reducer';
 import { map, switchMap } from 'rxjs/operators';
+import { trigger, transition, style, animate, state } from '@angular/animations';
+
+
+const animations = [
+  trigger('recipe-detail', [
+    state('normal',style({
+      "opacity": 1,
+      'transform': "translateX(0)"
+    })),
+    transition('* <=> *', [
+      style({
+        "opacity": 0,
+        'transform': "translateX(-100px)"
+      }),
+      animate(500)
+    ])
+  ])
+]
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styles: [
-  ]
+  styles: [ ],
+  animations: animations
 })
 export class RecipeDetailComponent implements OnInit {
 
   recipeDetails: Recipe;
   id: number;
+  animationState: string;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -26,6 +45,7 @@ export class RecipeDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.animationState = 'normal';
     this.activeRoute.params.pipe(
       map((params: Params) => +params['id']),
       switchMap((id) => {
@@ -38,6 +58,7 @@ export class RecipeDetailComponent implements OnInit {
         });
       })
     ).subscribe((recipe) => {
+      this.animationState = (this.animationState === 'normal') ? 'abnormal' : 'normal';
       this.recipeDetails = recipe;
     });
   }
