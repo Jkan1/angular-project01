@@ -54,6 +54,6 @@ export function authReducer(state = initialState, action: AuthActions) {
                 authError: null
             }
         default:
-            return state;
+            return { ...state };
     }
 }
