@@ -6,6 +6,9 @@ export class User {
         public id: string,
         private _token: string,
         private _tokenExpiry: Date,
+        public emailVerified: boolean,
+        public displayName?: string,
+        public profileImage?: string,
     ){}
 
     get token(){

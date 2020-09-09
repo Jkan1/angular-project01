@@ -15,10 +15,12 @@ export class AuthEffects {
 
     private signupUrl = environment.firebaseSignupUrl + environment.firebaseApiKey;
     private loginUrl = environment.firebaseSignInWithPasswordUrl + environment.firebaseApiKey;
+    private setProfileUrl = environment.firebaseSetUserProfileUrl + environment.firebaseApiKey;
+    private getProfileUrl = environment.firebaseGetUserProfileUrl + environment.firebaseApiKey;
 
-    private handleAuthentication = (expiresIn, email, localId, idToken) => {
+    private handleAuthentication = (expiresIn, email, localId, idToken, isVerified, userName, profileImage) => {
         let expiryDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
-        const newUser = new User(email, localId, idToken, expiryDate);
+        const newUser = new User(email, localId, idToken, expiryDate, isVerified, userName, profileImage);
         localStorage.setItem('userData', JSON.stringify(newUser));
         this.authService.setLogoutTimer(+expiresIn * 1000);
         return new AuthSuccess({
@@ -29,6 +31,14 @@ export class AuthEffects {
             redirect: true
         });
     }
+
+    // private setProfile = (idToken, displayName, photoUrl) => {
+    //     return new SetProfile({
+    //         idToken: idToken,
+    //         displayName: displayName,
+    //         photoUrl: photoUrl
+    //     });
+    // }
 
     private handleError = (errorRes) => {
         let eMessage = "An Unknown Error Occured";
@@ -58,12 +68,41 @@ export class AuthEffects {
                 password: signupAction.payload.password,
                 returnSecureToken: true
             }).pipe(
-                map((resData) => {
-                    return this.handleAuthentication(
-                        resData.expiresIn,
-                        resData.email,
-                        resData.localId,
-                        resData.idToken
+                switchMap((resData) => {
+                    console.log(">>>>> ", signupAction);
+                    const localId = resData.localId;
+                    const idToken = resData.idToken;
+                    const email = resData.email;
+                    const expiresIn = resData.expiresIn;
+                    return this.httpClient.post<any>(this.setProfileUrl, {
+                        idToken: idToken,
+                        displayName: signupAction.payload.userName,
+                        photoUrl: signupAction.payload.profileImage,
+                        returnSecureToken:true
+                    }).pipe(
+                        map((resData) => {
+                            console.log("RESULT --> ", resData);
+                            let emailVerified: boolean;
+                            let displayName: string;
+                            let profileImage: string;
+                            if (resData) {
+                                emailVerified = resData.emailVerified;
+                                displayName = resData.displayName;
+                                profileImage = resData.photoUrl;
+                            }
+                            return this.handleAuthentication(
+                                expiresIn,
+                                email,
+                                localId,
+                                idToken,
+                                emailVerified,
+                                displayName,
+                                profileImage
+                            );
+                        }),
+                        catchError((errorRes) => {
+                            return this.handleError(errorRes);
+                        })
                     );
                 }),
                 catchError((errorRes) => {
@@ -82,12 +121,37 @@ export class AuthEffects {
                 password: authData.payload.password,
                 returnSecureToken: true
             }).pipe(
-                map((resData) => {
-                    return this.handleAuthentication(
-                        resData.expiresIn,
-                        resData.email,
-                        resData.localId,
-                        resData.idToken
+                switchMap((resData) => {
+                    const localId = resData.localId;
+                    const idToken = resData.idToken;
+                    const email = resData.email;
+                    const expiresIn = resData.expiresIn;
+                    return this.httpClient.post<any>(this.getProfileUrl, {
+                        idToken: idToken
+                    }).pipe(
+                        map((resData) => {
+                            console.log(">>>>>", resData);
+                            let emailVerified: boolean;
+                            let displayName:string;
+                            let profileImage:string;
+                            if (resData && resData.users && resData.users[0]) {
+                                emailVerified = resData.users[0].emailVerified;
+                                displayName = resData.users[0].displayName;
+                                profileImage = resData.users[0].photoUrl;
+                            }
+                            return this.handleAuthentication(
+                                expiresIn,
+                                email,
+                                localId,
+                                idToken,
+                                emailVerified,
+                                displayName,
+                                profileImage
+                            );
+                        }),
+                        catchError((errorRes) => {
+                            return this.handleError(errorRes);
+                        })
                     );
                 }),
                 catchError((errorRes) => {
@@ -119,7 +183,10 @@ export class AuthEffects {
                 userData.email,
                 userData.id,
                 userData._token,
-                new Date(userData._tokenExpiry)
+                new Date(userData._tokenExpiry),
+                userData.emailVerified,
+                userData.displayName,
+                userData.profileImage
             );
 
             if (loadedUser.token) {

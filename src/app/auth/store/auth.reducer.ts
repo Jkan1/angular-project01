@@ -20,7 +20,10 @@ export function authReducer(state = initialState, action: AuthActions) {
                 action.payload.email,
                 action.payload.userId,
                 action.payload.token,
-                action.payload.expDate
+                action.payload.expDate,
+                action.payload.emailVerified,
+                action.payload.displayName,
+                action.payload.profileImage
             );
             return {
                 ...state,

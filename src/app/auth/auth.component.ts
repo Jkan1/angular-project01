@@ -27,6 +27,7 @@ const animations = [
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
+    styles: [' .form-profile-preview { height:100px; width:100px; } '],
     animations: animations
 })
 export class AuthComponent implements OnInit, OnDestroy {
@@ -63,13 +64,15 @@ export class AuthComponent implements OnInit, OnDestroy {
         }
         const email: string = authForm.value.email;
         const password = authForm.value.password;
+        const userName = authForm.value.userName;
+        const profileImage = authForm.value.profileImage;
         if (environment.production && email.match('yopmail.com')) {
             return;
         }
         if (this.isLoginMode) {
             this.store.dispatch(new LoginStart({ email, password }))
         } else {
-            this.store.dispatch(new SignupStart({ email, password }));
+            this.store.dispatch(new SignupStart({ email, password, userName, profileImage }));
         }
 
         this.store.select('auth').subscribe((authState) => { });
