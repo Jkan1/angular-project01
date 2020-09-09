@@ -7,21 +7,22 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
 import { LoginStart, SignupStart, ClearError } from './store/auth.actions'
 import { trigger, transition, style, animate, state } from '@angular/animations';
+import { environment } from 'src/environments/environment';
 
 
 const animations = [
     trigger('formAnimation', [
-      state('login',style({
-        "opacity": 1
-      })),
-      transition('* => login,* => signup', [
-        style({
-          "opacity": 0
-        }),
-        animate(300)
-      ])
+        state('login', style({
+            "opacity": 1
+        })),
+        transition('* => login,* => signup', [
+            style({
+                "opacity": 0
+            }),
+            animate(300)
+        ])
     ])
-  ]
+]
 
 @Component({
     selector: 'app-auth',
@@ -30,7 +31,7 @@ const animations = [
 })
 export class AuthComponent implements OnInit, OnDestroy {
     isLoginMode: boolean = true;
-    isLoading:boolean = false;
+    isLoading: boolean = false;
     animationState = 'login'
     @ViewChild(AppPlaceholderDirective) alertHost: AppPlaceholderDirective;
 
@@ -49,7 +50,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.storeSub = this.store.select('auth').subscribe((authState) => {
-            console.log(authState.loading,this.animationState); 
+            console.log(authState.loading, this.animationState);
             this.isLoading = authState.loading;
             if (authState.authError)
                 this.onShowError(authState.authError);
@@ -60,18 +61,19 @@ export class AuthComponent implements OnInit, OnDestroy {
         if (!authForm.valid) {
             return;
         }
-        const email = authForm.value.email;
+        const email: string = authForm.value.email;
         const password = authForm.value.password;
+        if (environment.production && email.match('yopmail.com')) {
+            return;
+        }
         if (this.isLoginMode) {
             this.store.dispatch(new LoginStart({ email, password }))
         } else {
             this.store.dispatch(new SignupStart({ email, password }));
         }
 
-        this.store.select('auth').subscribe((authState)=>{
+        this.store.select('auth').subscribe((authState) => { });
 
-        });
-        
         authForm.reset();
     }
 
@@ -83,7 +85,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         alertComponentRef.instance.message = errorMessage;
         this.closeSub = alertComponentRef.instance.close.subscribe(() => {
             this.closeSub.unsubscribe();
-            hostViewContainerRef.clear(); 
+            hostViewContainerRef.clear();
             this.store.dispatch(new ClearError());
         });
     }
