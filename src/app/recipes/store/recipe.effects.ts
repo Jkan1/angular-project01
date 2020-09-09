@@ -6,6 +6,7 @@ import { Recipe } from '../recipe.model';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class RecipeEffects {
@@ -14,8 +15,7 @@ export class RecipeEffects {
     fetchRecipes = this.action$.pipe(
         ofType(FETCH_RECIPES),
         switchMap(() => {
-            return this.httpClient.get<Recipe[]>(
-                'https://recipe-d6253.firebaseio.com/recipes.json')
+            return this.httpClient.get<Recipe[]>(environment.dataBaseUrl)
         }),
         map(
             (data) => {
@@ -37,7 +37,7 @@ export class RecipeEffects {
         ofType(STORE_RECIPES),
         withLatestFrom(this.store.select('recipes')),
         switchMap(([actionState, recipeState]) => {
-            return this.httpClient.put('https://recipe-d6253.firebaseio.com/recipes.json', recipeState.recipes)
+            return this.httpClient.put(environment.dataBaseUrl, recipeState.recipes)
         })
     )
 

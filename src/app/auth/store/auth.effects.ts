@@ -13,8 +13,8 @@ import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_ST
 @Injectable()
 export class AuthEffects {
 
-    private signupUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + environment.firebaseApiKey;
-    private loginUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + environment.firebaseApiKey;
+    private signupUrl = environment.firebaseSignupUrl + environment.firebaseApiKey;
+    private loginUrl = environment.firebaseSignInWithPasswordUrl + environment.firebaseApiKey;
 
     private handleAuthentication = (expiresIn, email, localId, idToken) => {
         let expiryDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
@@ -130,7 +130,7 @@ export class AuthEffects {
                     userId: loadedUser.id,
                     token: loadedUser.token,
                     expDate: new Date(userData._tokenExpiry),
-                    redirect:false
+                    redirect: false
                 });
             }
             return { type: 'NONE' }
