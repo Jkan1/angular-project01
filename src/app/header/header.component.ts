@@ -5,6 +5,7 @@ import { AppState } from '../store/app.reducer';
 import { map } from 'rxjs/operators';
 import { Logout } from '../auth/store/auth.actions';
 import { FetchRecipes, StoreRecipes } from '../recipes/store/recipe.actions';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-header',
@@ -16,6 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     private authSubscription: Subscription;
     isAuthenticated: boolean = false;
+    userName: string;
+    profileImage: string = environment.sampleProfileImage;
 
     constructor(private store: Store<AppState>) { }
 
@@ -27,6 +30,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 }))
             .subscribe((user) => {
                 this.isAuthenticated = !!user;
+                console.log("LLLL ",user);
+                if(user){
+                    this.userName = user.displayName;
+                    this.profileImage = user.profileImage ? user.profileImage : this.profileImage;
+                }
             });
     }
 

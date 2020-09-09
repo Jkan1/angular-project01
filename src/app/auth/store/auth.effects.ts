@@ -28,7 +28,10 @@ export class AuthEffects {
             userId: localId,
             token: idToken,
             expDate: expiryDate,
-            redirect: true
+            redirect: true,
+            emailVerified: newUser.emailVerified,
+            displayName: newUser.displayName,
+            profileImage: newUser.profileImage
         });
     }
 
@@ -197,7 +200,10 @@ export class AuthEffects {
                     userId: loadedUser.id,
                     token: loadedUser.token,
                     expDate: new Date(userData._tokenExpiry),
-                    redirect: false
+                    redirect: false,
+                    emailVerified: loadedUser.emailVerified,
+                    displayName: loadedUser.displayName,
+                    profileImage: loadedUser.profileImage
                 });
             }
             return { type: 'NONE' }

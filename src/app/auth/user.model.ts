@@ -9,7 +9,7 @@ export class User {
         public emailVerified: boolean,
         public displayName?: string,
         public profileImage?: string,
-    ){}
+    ) { }
 
     get token(){
         if (!this._tokenExpiry || new Date() > this._tokenExpiry){
