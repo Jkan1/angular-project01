@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../user.model';
 import { AuthService } from '../auth.service';
-import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_START, SignupStart, LOGOUT, AUTO_LOGIN, VERIFY_START, VerifyStart, VerifySuccess } from './auth.actions'
+import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_START, SignupStart, LOGOUT, AUTO_LOGIN, VERIFY_START, VerifyStart, VerifySuccess, SEND_EMAIL_START, SendEmailStart, SendEmailSuccess, VERIFY_SUCCESS } from './auth.actions'
 
 @Injectable()
 export class AuthEffects {
@@ -18,6 +18,7 @@ export class AuthEffects {
     private setProfileUrl = environment.firebaseSetUserProfileUrl + environment.firebaseApiKey;
     private getProfileUrl = environment.firebaseGetUserProfileUrl + environment.firebaseApiKey;
     private sendEmailVerificationUrl = environment.sendEmailVerificationUrl + environment.firebaseApiKey;
+    private verificationUrl = environment.veryUserIdentityUrl + environment.firebaseApiKey;
 
     private handleAuthentication = (expiresIn, email, localId, idToken, isVerified, userName, profileImage) => {
         let expiryDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
@@ -39,7 +40,7 @@ export class AuthEffects {
     private handleError = (errorRes) => {
         let eMessage = "An Unknown Error Occured";
         if (!errorRes.error || !errorRes.error.error) {
-            return of(new AuthFail(eMessage));
+            return new AuthFail(eMessage);
         }
         switch (errorRes.error.error.message) {
             case 'EMAIL_EXISTS':
@@ -51,8 +52,15 @@ export class AuthEffects {
             case 'INVALID_PASSWORD':
                 eMessage = "This email password is incorrect";
                 break;
+            case 'INVALID_OOB_CODE':
+            case 'EXPIRED_OOB_CODE':
+                eMessage = "Sorry, We were Unable to verify your Identity.\n Please try after some time.";
+                break;
+            case 'USER_DISABLED':
+                eMessage = "Sorry your Account is Disabled";
+                break;
         }
-        return of(new AuthFail(eMessage));
+        return new AuthFail(eMessage);
     }
 
     @Effect()
@@ -95,12 +103,12 @@ export class AuthEffects {
                             );
                         }),
                         catchError((errorRes) => {
-                            return this.handleError(errorRes);
+                            return of(this.handleError(errorRes));
                         })
                     );
                 }),
                 catchError((errorRes) => {
-                    return this.handleError(errorRes);
+                    return of(this.handleError(errorRes));
                 })
             );
         })
@@ -143,12 +151,12 @@ export class AuthEffects {
                             );
                         }),
                         catchError((errorRes) => {
-                            return this.handleError(errorRes);
+                            return of(this.handleError(errorRes));
                         })
                     );
                 }),
                 catchError((errorRes) => {
-                    return this.handleError(errorRes);
+                    return of(this.handleError(errorRes));
                 })
             );
         })
@@ -201,20 +209,80 @@ export class AuthEffects {
     );
 
     @Effect()
-    userVerificationStart = this.action$.pipe(
-        ofType(VERIFY_START),
-        switchMap((verifyAction: VerifyStart) => {
+    userSendEmail = this.action$.pipe(
+        ofType(SEND_EMAIL_START),
+        switchMap((sendEmailAction: SendEmailStart) => {
             return this.httpClient.post<any>(this.sendEmailVerificationUrl, {
                 requestType: 'VERIFY_EMAIL',
-                idToken: verifyAction.payload.idToken
+                idToken: sendEmailAction.payload.idToken
             }).pipe(
                 map((result) => {
-                    return new VerifySuccess();
+                    return new SendEmailSuccess();
                 }),
                 catchError((errorRes) => {
-                    return this.handleError(errorRes);
+                    return of(this.handleError(errorRes));
                 })
             );
+        })
+    );
+
+    @Effect()
+    userVerifyStart = this.action$.pipe(
+        ofType(VERIFY_START),
+        switchMap((verifyAction: VerifyStart) => {
+            return this.httpClient.post<any>(this.verificationUrl, {
+                oobCode: verifyAction.payload.oobToken
+            }).pipe(
+                map((result) => {
+                    return new VerifySuccess({
+                        emailVerified: result ? result.emailVerified : false
+                    });
+                }),
+                catchError((errorRes) => {
+                    return of(this.handleError(errorRes));
+                })
+            );
+        })
+    );
+
+    @Effect()
+    userVerifySuccess = this.action$.pipe(
+        ofType(VERIFY_SUCCESS),
+        switchMap((resData) => {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const localId = userData.id;
+            const idToken = userData._token;
+            return this.httpClient.post<any>(this.getProfileUrl, {
+                idToken: idToken
+            }).pipe(
+                map((resData) => {
+                    let emailVerified: boolean;
+                    let displayName: string;
+                    let profileImage: string;
+                    let email = userData.email;
+                    if (resData && resData.users && resData.users[0]) {
+                        emailVerified = resData.users[0].emailVerified;
+                        displayName = resData.users[0].displayName;
+                        profileImage = resData.users[0].photoUrl;
+                        email = resData.users[0].email;
+                    }
+                    return this.handleAuthentication(
+                        1800,
+                        email,
+                        localId,
+                        idToken,
+                        emailVerified,
+                        displayName,
+                        profileImage
+                    );
+                }),
+                catchError((errorRes) => {
+                    return of(this.handleError(errorRes));
+                })
+            );
+        }),
+        catchError((errorRes) => {
+            return of(this.handleError(errorRes));
         })
     );
 

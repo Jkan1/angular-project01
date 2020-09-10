@@ -1,5 +1,5 @@
 import { User } from '../user.model';
-import { AuthActions, AUTH_SUCCESS, LOGOUT, LOGIN_START, AUTH_FAIL, SIGNUP_START, CLEAR_ERROR } from './auth.actions';
+import { AuthActions, AUTH_SUCCESS, LOGOUT, LOGIN_START, AUTH_FAIL, SIGNUP_START, CLEAR_ERROR, VERIFY_SUCCESS, VERIFY_START } from './auth.actions';
 
 export interface State {
     user: User;
@@ -14,6 +14,7 @@ const initialState: State = {
 }
 
 export function authReducer(state = initialState, action: AuthActions) {
+    console.log(action.type);
     switch (action.type) {
         case AUTH_SUCCESS:
             const newUser = new User(
@@ -29,7 +30,7 @@ export function authReducer(state = initialState, action: AuthActions) {
                 ...state,
                 authError: null,
                 user: newUser,
-                loading:false
+                loading: false
             }
         case LOGIN_START:
         case SIGNUP_START:
@@ -42,7 +43,6 @@ export function authReducer(state = initialState, action: AuthActions) {
             return {
                 ...state,
                 authError: action.payload,
-                user: null,
                 loading: false
             }
         case LOGOUT:
@@ -50,6 +50,25 @@ export function authReducer(state = initialState, action: AuthActions) {
                 ...state,
                 authError: null,
                 user: null
+            }
+        case VERIFY_SUCCESS:
+            const verifiedUser = new User(
+                state.user.email,
+                state.user.id,
+                state.user.token,
+                state.user._tokenExpiry,
+                action.payload.emailVerified,
+                state.user.displayName,
+                state.user.profileImage
+            );
+            return {
+                ...state,
+                user: verifiedUser
+            };
+        case VERIFY_START:
+            return {
+                ...state,
+                loading: true
             }
         case CLEAR_ERROR:
             return {

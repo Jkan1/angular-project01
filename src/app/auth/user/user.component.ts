@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { VerifyStart } from '../store/auth.actions';
+import { SendEmailStart } from '../store/auth.actions';
 
 @Component({
   selector: 'app-user',
@@ -50,7 +50,7 @@ export class UserComponent implements OnInit, OnDestroy {
     }
     this.buttonTimer = 20;
     localStorage.setItem('EMAIL_ATTEMPT_TIMER', this.buttonTimer.toString());
-    this.store.dispatch(new VerifyStart({ idToken: this.user.token }));
+    this.store.dispatch(new SendEmailStart({ idToken: this.user.token }));
     this.setupSendEmailTimer();
   }
 
