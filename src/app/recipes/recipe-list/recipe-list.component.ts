@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { AppState } from 'src/app/store/app.reducer';
 import { Recipe } from '../recipe.model';
+import { FetchRecipes } from '../store/recipe.actions';
 
 
 @Component({
@@ -28,7 +29,11 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       map(recipeState => recipeState.recipes)
     ).subscribe(
       (recipes: Recipe[]) => {
-        this.recipes = recipes;
+        if (!recipes || !recipes.length) {
+          this.store.dispatch(new FetchRecipes());
+        } else {
+          this.recipes = recipes;
+        }
       }
     )
   }
@@ -40,5 +45,5 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   onAddRecipe() {
     this.routerService.navigate(['new'], { relativeTo: this.activeRoute })
   }
-  
+
 }
