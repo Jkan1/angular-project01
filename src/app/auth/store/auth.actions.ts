@@ -7,6 +7,8 @@ export const AUTO_LOGIN = '[Auth] AUTO_LOGIN';
 export const CLEAR_ERROR = '[Auth] CLEAR_ERROR';
 export const AUTH_SUCCESS = '[Auth] AUTH_SUCCESS';
 export const AUTH_FAIL = '[Auth] AUTH_FAIL';
+export const VERIFY_START = '[Auth] VERIFY_START';
+export const VERIFY_SUCCESS = '[Auth] VERIFY_SUCCESS';
 
 export class AuthSuccess implements Action {
     readonly type = AUTH_SUCCESS;
@@ -52,4 +54,21 @@ export class AutoLogin implements Action {
     readonly type = AUTO_LOGIN;
 }
 
-export type AuthActions = AuthSuccess | Logout | LoginStart | AuthFail | SignupStart | ClearError | AutoLogin; 
+export class VerifyStart implements Action {
+    readonly type = VERIFY_START;
+    constructor(public payload: { idToken: string }) { }
+}
+
+export class VerifySuccess implements Action {
+    readonly type = VERIFY_SUCCESS;
+}
+
+export type AuthActions = AuthSuccess
+    | Logout
+    | LoginStart
+    | AuthFail
+    | SignupStart
+    | ClearError
+    | AutoLogin
+    | VerifyStart
+    | VerifySuccess; 

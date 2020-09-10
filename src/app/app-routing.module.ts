@@ -1,9 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
+import { UserComponent } from './auth/user/user.component';
+import { VerifyComponent } from './auth/verify/verify.component';
 
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
+    {
+        path: 'user',
+        canActivate: [AuthGuard],
+        component: UserComponent
+    },
+    {
+        path: 'verify',
+        canActivate: [AuthGuard],
+        component: VerifyComponent
+    },
     {
         path: 'recipes',
         loadChildren: () => import('./recipes/recipe.module').then((m) => m.RecipeModule)

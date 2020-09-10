@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 }))
             .subscribe((user) => {
                 this.isAuthenticated = !!user;
-                console.log("LLLL ",user);
                 if(user){
                     this.userName = user.displayName;
                     this.profileImage = user.profileImage ? user.profileImage : this.profileImage;

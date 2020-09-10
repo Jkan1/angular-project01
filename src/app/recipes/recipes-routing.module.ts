@@ -7,10 +7,11 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipesResolver } from './recipes-resolver.service';
 import { RecipesComponent } from './recipes.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { VerifyGuard } from '../auth/verify/verify.guard';
 
 const routes: Routes = [{
     path: "", component: RecipesComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, VerifyGuard],
     children: [
         { path: "", component: RecipeStartComponent },
         { path: "new", component: RecipeEditComponent },

@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../user.model';
 import { AuthService } from '../auth.service';
-import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_START, SignupStart, LOGOUT, AUTO_LOGIN } from './auth.actions'
+import { LOGIN_START, LoginStart, AuthSuccess, AUTH_SUCCESS, AuthFail, SIGNUP_START, SignupStart, LOGOUT, AUTO_LOGIN, VERIFY_START, VerifyStart, VerifySuccess } from './auth.actions'
 
 @Injectable()
 export class AuthEffects {
@@ -17,6 +17,7 @@ export class AuthEffects {
     private loginUrl = environment.firebaseSignInWithPasswordUrl + environment.firebaseApiKey;
     private setProfileUrl = environment.firebaseSetUserProfileUrl + environment.firebaseApiKey;
     private getProfileUrl = environment.firebaseGetUserProfileUrl + environment.firebaseApiKey;
+    private sendEmailVerificationUrl = environment.sendEmailVerificationUrl + environment.firebaseApiKey;
 
     private handleAuthentication = (expiresIn, email, localId, idToken, isVerified, userName, profileImage) => {
         let expiryDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
@@ -34,14 +35,6 @@ export class AuthEffects {
             profileImage: newUser.profileImage
         });
     }
-
-    // private setProfile = (idToken, displayName, photoUrl) => {
-    //     return new SetProfile({
-    //         idToken: idToken,
-    //         displayName: displayName,
-    //         photoUrl: photoUrl
-    //     });
-    // }
 
     private handleError = (errorRes) => {
         let eMessage = "An Unknown Error Occured";
@@ -72,7 +65,6 @@ export class AuthEffects {
                 returnSecureToken: true
             }).pipe(
                 switchMap((resData) => {
-                    console.log(">>>>> ", signupAction);
                     const localId = resData.localId;
                     const idToken = resData.idToken;
                     const email = resData.email;
@@ -84,7 +76,6 @@ export class AuthEffects {
                         returnSecureToken:true
                     }).pipe(
                         map((resData) => {
-                            console.log("RESULT --> ", resData);
                             let emailVerified: boolean;
                             let displayName: string;
                             let profileImage: string;
@@ -133,7 +124,6 @@ export class AuthEffects {
                         idToken: idToken
                     }).pipe(
                         map((resData) => {
-                            console.log(">>>>>", resData);
                             let emailVerified: boolean;
                             let displayName:string;
                             let profileImage:string;
@@ -208,7 +198,25 @@ export class AuthEffects {
             }
             return { type: 'NONE' }
         })
-    )
+    );
+
+    @Effect()
+    userVerificationStart = this.action$.pipe(
+        ofType(VERIFY_START),
+        switchMap((verifyAction: VerifyStart) => {
+            return this.httpClient.post<any>(this.sendEmailVerificationUrl, {
+                requestType: 'VERIFY_EMAIL',
+                idToken: verifyAction.payload.idToken
+            }).pipe(
+                map((result) => {
+                    return new VerifySuccess();
+                }),
+                catchError((errorRes) => {
+                    return this.handleError(errorRes);
+                })
+            );
+        })
+    );
 
     @Effect({ dispatch: false })
     authLogout = this.action$.pipe(

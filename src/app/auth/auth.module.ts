@@ -4,10 +4,14 @@ import { AuthComponent } from "./auth.component";
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { VerifyComponent } from './verify/verify.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
     declarations: [
-        AuthComponent
+        AuthComponent,
+        VerifyComponent,
+        UserComponent
     ],
     imports: [
         SharedModule, 

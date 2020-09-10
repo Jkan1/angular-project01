@@ -9,6 +9,7 @@ export const environment = {
   firebaseSignInWithPasswordUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=',
   firebaseSetUserProfileUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=',
   firebaseGetUserProfileUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=',
+  sendEmailVerificationUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=',
   dataBaseUrl: 'https://recipe-d6253.firebaseio.com/recipes.json',
   sampleProfileImage:'https://www.alchinlong.com/wp-content/uploads/2015/09/sample-profile.png'
 };
