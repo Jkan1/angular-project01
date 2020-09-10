@@ -26,11 +26,14 @@ export class VerifyComponent implements OnInit {
         this.store.select('auth').subscribe((state) => {
           if (!state || !state.user) {
             this.isLoading = false;
-            this.errorMessage = "Sorry, Please Sign Into your account first";
+            this.errorMessage = "Sorry, Please Sign Into your account first.\n\n Redirecting you to Login in 5 seconds";
+            setTimeout(()=>{
+              this.router.navigate(['/auth']);
+            },5000)
           } else {
             if (state.user.emailVerified) {
               this.isLoading = false;
-              this.successMessage = "Verification Successful\n\nRedirecting in 5 seconds";
+              this.successMessage = "Verification Successful\n\n Redirecting in 5 seconds";
               setTimeout(()=>{
                 this.router.navigate(['/']);
               },5000)

@@ -12,7 +12,9 @@
         </div>
         <div >
             <h3>Welcome to your Profile</h3>
-            <h3>{{ user ? user.displayName || user.email : 'user'}}</h3>
+            <img *ngIf="user.profileImage" src="{{user.profileImage}}" alt="User Profile Image" class="avatar">
+            <h4 *ngIf="user.displayName">Username : {{ user ? user.displayName || user.email : 'user'}}</h4>
+            <h4>Email : {{  user.email }}</h4>
         </div>
     </div>
 </div>

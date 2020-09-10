@@ -13,8 +13,7 @@ const appRoutes: Routes = [
         component: UserComponent
     },
     {
-        path: 'verify',
-        canActivate: [AuthGuard],
+        path: 'verify/_/auth/valid',
         component: VerifyComponent
     },
     {

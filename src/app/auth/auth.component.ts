@@ -8,6 +8,7 @@ import { AppState } from '../store/app.reducer';
 import { LoginStart, SignupStart, ClearError } from './store/auth.actions'
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 
 const animations = [
@@ -41,7 +42,8 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     constructor(
         private factory: ComponentFactoryResolver,
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private router: Router
     ) { }
 
     onSwitchMode() {
@@ -54,6 +56,9 @@ export class AuthComponent implements OnInit, OnDestroy {
             this.isLoading = authState.loading;
             if (authState.authError)
                 this.onShowError(authState.authError);
+            if(authState.user && authState.user.token){
+                this.router.navigate(['user']);
+            }
         });
     }
 
