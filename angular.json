@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-project01": {
+    "angular-recipe-book": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-project01",
+            "outputPath": "dist/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-project01:build"
+            "browserTarget": "angular-recipe-book:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-project01:build:production"
+              "browserTarget": "angular-recipe-book:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-project01:build"
+            "browserTarget": "angular-recipe-book:build"
           }
         },
         "test": {
@@ -114,15 +114,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-project01:serve"
+            "devServerTarget": "angular-recipe-book:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-project01:serve:production"
+              "devServerTarget": "angular-recipe-book:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "angular-project01"
+  "defaultProject": "angular-recipe-book"
 }
