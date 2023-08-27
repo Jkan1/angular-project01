@@ -1,4 +1,4 @@
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.reducer';
 
 @Injectable({ providedIn: "root" })
-export class VerifyGuard implements CanActivate {
+export class VerifyGuard  {
 
     constructor(private router: Router, private store: Store<AppState>) { }
 

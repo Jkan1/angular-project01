@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Recipe } from "./recipe.model";
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
@@ -9,7 +9,7 @@ import { take, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class RecipesResolver implements Resolve<Recipe[]> {
+export class RecipesResolver  {
 
     constructor(
         private store: Store<AppState>,
