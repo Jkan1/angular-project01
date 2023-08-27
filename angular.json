@@ -122,6 +122,6 @@
           "defaultConfiguration": "development"
         }
       }
-    }},
-  "defaultProject": "angular-recipe-book"
+    }
+  }
 }
