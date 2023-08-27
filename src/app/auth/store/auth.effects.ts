@@ -1,4 +1,4 @@
-import { Actions, ofType, Effect } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -63,8 +63,8 @@ export class AuthEffects {
         return new AuthFail(eMessage);
     }
 
-    @Effect()
-    authSignup = this.action$.pipe(
+    
+    authSignup = createEffect(() => this.action$.pipe(
         ofType(SIGNUP_START),
         switchMap((signupAction: SignupStart) => {
             return this.httpClient.post<AuthResponseData>(this.signupUrl, {
@@ -112,10 +112,10 @@ export class AuthEffects {
                 })
             );
         })
-    );
+    ));
 
-    @Effect()
-    authLogin = this.action$.pipe(
+    
+    authLogin = createEffect(() => this.action$.pipe(
         ofType(LOGIN_START),
         switchMap((authData: LoginStart) => {
             return this.httpClient.post<AuthResponseData>(this.loginUrl, {
@@ -160,20 +160,20 @@ export class AuthEffects {
                 })
             );
         })
-    );
+    ));
 
-    @Effect({ dispatch: false })
-    authSuccess = this.action$.pipe(
+    
+    authSuccess = createEffect(() => this.action$.pipe(
         ofType(AUTH_SUCCESS),
         tap((authState: AuthSuccess) => {
             if (authState.payload.redirect) {
                 this.router.navigate(['/']);
             }
         })
-    );
+    ), { dispatch: false });
 
-    @Effect()
-    authAutoLogin = this.action$.pipe(
+    
+    authAutoLogin = createEffect(() => this.action$.pipe(
         ofType(AUTO_LOGIN),
         map(() => {
             const userData = JSON.parse(localStorage.getItem('userData'));
@@ -206,10 +206,10 @@ export class AuthEffects {
             }
             return { type: 'NONE' }
         })
-    );
+    ));
 
-    @Effect()
-    userSendEmail = this.action$.pipe(
+    
+    userSendEmail = createEffect(() => this.action$.pipe(
         ofType(SEND_EMAIL_START),
         switchMap((sendEmailAction: SendEmailStart) => {
             return this.httpClient.post<any>(this.sendEmailVerificationUrl, {
@@ -224,10 +224,10 @@ export class AuthEffects {
                 })
             );
         })
-    );
+    ));
 
-    @Effect()
-    userVerifyStart = this.action$.pipe(
+    
+    userVerifyStart = createEffect(() => this.action$.pipe(
         ofType(VERIFY_START),
         switchMap((verifyAction: VerifyStart) => {
             return this.httpClient.post<any>(this.verificationUrl, {
@@ -243,10 +243,10 @@ export class AuthEffects {
                 })
             );
         })
-    );
+    ));
 
-    @Effect()
-    userVerifySuccess = this.action$.pipe(
+    
+    userVerifySuccess = createEffect(() => this.action$.pipe(
         ofType(VERIFY_SUCCESS),
         switchMap((resData) => {
             const userData = JSON.parse(localStorage.getItem('userData'));
@@ -284,16 +284,16 @@ export class AuthEffects {
         catchError((errorRes) => {
             return of(this.handleError(errorRes));
         })
-    );
+    ));
 
-    @Effect({ dispatch: false })
-    authLogout = this.action$.pipe(
+    
+    authLogout = createEffect(() => this.action$.pipe(
         ofType(LOGOUT),
         tap(() => {
             localStorage.clear();
             this.router.navigate(['/auth']);
         })
-    )
+    ), { dispatch: false })
 
     constructor(
         private action$: Actions,
