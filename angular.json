@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-recipe-book": {
+    "list-o-chef": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -75,10 +75,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-recipe-book:build:production"
+              "browserTarget": "list-o-chef:build:production"
             },
             "development": {
-              "browserTarget": "angular-recipe-book:build:development"
+              "browserTarget": "list-o-chef:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-recipe-book:build"
+            "browserTarget": "list-o-chef:build"
           }
         },
         "test": {
@@ -113,10 +113,10 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-recipe-book:serve:production"
+              "devServerTarget": "list-o-chef:serve:production"
             },
             "development": {
-              "devServerTarget": "angular-recipe-book:serve:development"
+              "devServerTarget": "list-o-chef:serve:development"
             }
           },
           "defaultConfiguration": "development"
