@@ -24,3 +24,15 @@
  .vh-75 {
      height: 75vh;
  }
+
+ .fxs-1 {
+    font-size: xx-small;
+ }
+
+ .fxs-2 {
+    font-size: x-small;
+ }
+
+ .fxs-3 {
+    font-size: small;
+ }
