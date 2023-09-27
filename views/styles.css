@@ -36,3 +36,10 @@
  .fxs-3 {
     font-size: small;
  }
+
+ .item-cards {
+    min-width: 225px !important;
+    min-height: 250px !important;
+    max-width: 225px !important;
+    max-height: 250px !important;
+}
