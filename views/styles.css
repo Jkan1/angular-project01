@@ -26,20 +26,28 @@
  }
 
  .fxs-1 {
-    font-size: xx-small;
+     font-size: xx-small;
  }
 
  .fxs-2 {
-    font-size: x-small;
+     font-size: x-small;
  }
 
  .fxs-3 {
-    font-size: small;
+     font-size: small;
  }
 
  .item-cards {
-    min-width: 225px !important;
-    min-height: 250px !important;
-    max-width: 225px !important;
-    max-height: 250px !important;
-}
+     min-width: 225px !important;
+     min-height: 250px !important;
+     max-width: 225px !important;
+     max-height: 250px !important;
+ }
+
+ .item-cards-text-overlay {
+     min-width: 200px !important;
+     min-height: 75px !important;
+     max-width: 50px !important;
+     max-height: 75px !important;
+     margin-top: 35px !important;
+ }
