@@ -18,9 +18,9 @@ export class VerifyGuard  {
         }),
         map(
             (data) => { 
-                if(data && data.emailVerified){
+                // if(data && data.emailVerified){
                     return true;
-                }
+                // }
                 return this.router.createUrlTree(['/user']);
             }
         ));

@@ -19,9 +19,9 @@ export class AuthGuard  {
         map(
             (data) => { 
                 let isAuth = !!data;
-                if (isAuth) {
+                // if (isAuth) {
                     return true;
-                }
+                // }
                 return this.router.createUrlTree(['/auth']);
             }
         ));
