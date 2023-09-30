@@ -1,15 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* @import "~bootstrap/dist/css/bootstrap.css"; */
-
-html, body {
-    height: 90%;
-    max-height: 90%;
-    background-color: rgb(131, 211, 155);
-}
-
-.container {
-    background-color: white;
+html,
+body {
+  height: 90%;
+  max-height: 90%;
+  background-color: lightsalmon;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -21,5 +16,71 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
+}
+
+* {
+  border: 1px solid black;
+}
+
+.home-item-icons {
+  min-width: 100px !important;
+  min-height: 100px !important;
+  max-width: 100px !important;
+  max-height: 100px !important;
+}
+
+.vh-20 {
+  height: 20vh;
+}
+
+.vh-50 {
+  height: 50vh;
+}
+
+.vh-60 {
+  height: 60vh;
+}
+
+.vh-70 {
+  height: 70vh;
+}
+
+.vh-75 {
+  height: 75vh;
+}
+
+.fxs-1 {
+  font-size: xx-small;
+}
+
+.fxs-2 {
+  font-size: x-small;
+}
+
+.fxs-3 {
+  font-size: small;
+}
+
+.item-cards {
+  min-width: 225px !important;
+  min-height: 250px !important;
+  max-width: 225px !important;
+  max-height: 250px !important;
+}
+
+.item-cards-text-overlay {
+  min-width: 200px !important;
+  min-height: 75px !important;
+  max-width: 200px !important;
+  max-height: 75px !important;
+  margin-top: 35px !important;
+}
+
+.footer-text-block {
+  min-width: fit-content;
+  min-height: fit-content;
+  max-width: 300px !important;
+  max-height: fit-content;
 }
