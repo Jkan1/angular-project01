@@ -62,3 +62,19 @@
      max-width: 300px !important;
      max-height: fit-content;
  }
+
+ .shadow-inner {
+     box-shadow: inset 0px -130px 50px 5px rgba(0, 0, 0, 0.56);
+ }
+
+ .inner-bodder-box {
+     min-width: 93.3% !important;
+     min-height: 95% !important;
+     max-width: 93% !important;
+     max-height: 95% !important;
+     margin-top: 3%;
+     margin-left: 3.3%;
+     margin-right: 3.3%;
+     border: 3px solid rgb(250, 220, 40);
+     border-bottom: none;
+ }
