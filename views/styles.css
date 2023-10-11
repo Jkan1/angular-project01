@@ -21,6 +21,10 @@
      height: 60vh;
  }
 
+ .vh-65 {
+     height: 65vh;
+ }
+
  .vh-70 {
      height: 70vh;
  }
@@ -47,6 +51,14 @@
      max-width: 225px !important;
      max-height: 250px !important;
  }
+
+ .banner-image-text-overlay {
+    min-width: 90% !important;
+    min-height: 120px !important;
+    max-width: 90% !important;
+    max-height: 120px !important;
+    margin-top: 35px !important;
+}
 
  .item-cards-text-overlay {
      min-width: 200px !important;
@@ -77,4 +89,8 @@
      margin-right: 3.3%;
      border: 3px solid rgb(250, 220, 40);
      border-bottom: none;
+ }
+
+ .text-gold-tint {
+    color: rgb(250, 220, 40);
  }
