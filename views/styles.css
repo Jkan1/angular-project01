@@ -52,6 +52,13 @@
      max-height: 250px !important;
  }
 
+ .item-cards-preview {
+    min-width: 225px !important;
+    min-height: 250px !important;
+    max-width: 225px !important;
+    max-height: fit-content !important;
+}
+
  .banner-image-text-overlay {
     min-width: 90% !important;
     min-height: 120px !important;
