@@ -32,48 +32,48 @@ const animations = [
   styleUrls: ['./recipe-detail.component.css'],
   animations: animations
 })
-export class RecipeDetailComponent implements OnInit {
+export class RecipeDetailComponent {
 
-  recipeDetails: Recipe;
-  id: number;
-  animationState: string;
+  // recipeDetails: Recipe;
+  // id: number;
+  // animationState: string;
 
-  constructor(
-    private activeRoute: ActivatedRoute,
-    private routerService: Router,
-    private store: Store<AppState>
-  ) { }
+  // constructor(
+  //   private activeRoute: ActivatedRoute,
+  //   private routerService: Router,
+  //   private store: Store<AppState>
+  // ) { }
 
-  ngOnInit(): void {
-    this.animationState = 'normal';
-    this.activeRoute.params.pipe(
-      map((params: Params) => +params['id']),
-      switchMap((id) => {
-        this.id = id;
-        return this.store.select('recipes');
-      }),
-      map((recipeState) => {
-        return recipeState.recipes.find((recipe, index) => {
-          return index === this.id;
-        });
-      })
-    ).subscribe((recipe) => {
-      this.animationState = (this.animationState === 'normal') ? 'abnormal' : 'normal';
-      this.recipeDetails = recipe;
-    });
-  }
+  // ngOnInit(): void {
+  //   this.animationState = 'normal';
+  //   this.activeRoute.params.pipe(
+  //     map((params: Params) => +params['id']),
+  //     switchMap((id) => {
+  //       this.id = id;
+  //       return this.store.select('recipes');
+  //     }),
+  //     map((recipeState) => {
+  //       return recipeState.recipes.find((recipe, index) => {
+  //         return index === this.id;
+  //       });
+  //     })
+  //   ).subscribe((recipe) => {
+  //     this.animationState = (this.animationState === 'normal') ? 'abnormal' : 'normal';
+  //     this.recipeDetails = recipe;
+  //   });
+  // }
 
-  addIngredientsToShoppingList() {
-    this.store.dispatch(new AddIngMulti(this.recipeDetails.ingredients));
-  }
+  // addIngredientsToShoppingList() {
+  //   this.store.dispatch(new AddIngMulti(this.recipeDetails.ingredients));
+  // }
 
-  onEditRecipe() {
-    this.routerService.navigate(['edit'], { relativeTo: this.activeRoute });
-  }
+  // onEditRecipe() {
+  //   this.routerService.navigate(['edit'], { relativeTo: this.activeRoute });
+  // }
 
-  onDeleteRecipe() {
-    this.store.dispatch(new DeleteRecipe(this.id));
-    this.routerService.navigate(['/recipes']);
-  }
+  // onDeleteRecipe() {
+  //   this.store.dispatch(new DeleteRecipe(this.id));
+  //   this.routerService.navigate(['/recipes']);
+  // }
 
 }

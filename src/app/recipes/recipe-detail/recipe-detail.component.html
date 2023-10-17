@@ -1,44 +1,37 @@
-
-    <div 
-    *ngIf="recipeDetails; else noRecipeDetailsFound" 
-    [@recipe-detail]="animationState"
-    class="container edit-container"
+<!-- <div *ngIf="recipeDetails; else noRecipeDetailsFound" [@recipe-detail]="animationState" class="container edit-container"
     style="background-color: black; color:white; height: 100%; padding: 20px;">
 
-            <div class="col-xs-12 " style="text-align: center;">
-                <img [src]="recipeDetails.imagePath" alt="" class="img-fluid" style=" max-height: 300px;">
-            </div>
-            
-            <div class="col-sx-12">
-                <h1>{{recipeDetails.name}}</h1>
-            </div>
+    <div class="col-xs-12 " style="text-align: center;">
+        <img [src]="recipeDetails.imagePath" alt="" class="img-fluid" style=" max-height: 300px;">
+    </div>
 
-            <div class="col-sx-12">
-                <div class="dropdown open" appDropdown>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Manage Recipe
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" (click)="addIngredientsToShoppingList()" itemPointer >To Shopping List</a>
-                        <a class="dropdown-item" itemPointer (click)="onEditRecipe()" >Edit Recipe</a>
-                        <a class="dropdown-item" itemPointer (click)="onDeleteRecipe()">Delete Recipe</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-xs-12">
-                <p style="text-align: left; margin-top:10px;margin-bottom: 15px;">
-                    {{recipeDetails.description}}
-                </p>
-            </div>
+    <div class="col-sx-12">
+        <h1>{{recipeDetails.name}}</h1>
+    </div>
 
-        <div class="list-group">
-            <div 
-            class="list-group-item" 
-            style="color: black;" 
-            *ngFor="let Item of recipeDetails.ingredients">
-            {{Item.name}} - {{Item.amount}} 
+    <div class="col-sx-12">
+        <div class="dropdown open" appDropdown>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Manage Recipe
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" (click)="addIngredientsToShoppingList()" itemPointer>To Shopping List</a>
+                <a class="dropdown-item" itemPointer (click)="onEditRecipe()">Edit Recipe</a>
+                <a class="dropdown-item" itemPointer (click)="onDeleteRecipe()">Delete Recipe</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <p style="text-align: left; margin-top:10px;margin-bottom: 15px;">
+            {{recipeDetails.description}}
+        </p>
+    </div>
+
+    <div class="list-group">
+        <div class="list-group-item" style="color: black;" *ngFor="let Item of recipeDetails.ingredients">
+            {{Item.name}} - {{Item.amount}}
         </div>
     </div>
 
@@ -46,4 +39,38 @@
 
 <ng-template #noRecipeDetailsFound>
     <p>Recipe Details Not Found</p>
-</ng-template>
+</ng-template> -->
+
+<div class="container-fluid px-0 mt-3">
+    <app-recipe-floater></app-recipe-floater>
+</div>
+
+<div class="container-fluid my-3 py-5">
+    <div class="container p-2 w-50">
+        <img src="https://picsum.photos/seed/box1/800/600" class="img-fluid object-fit-cover" alt="...">
+    </div>
+    <div class="container">
+        <h4>Lorem ipsum dolor sit amet.</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae fugiat veritatis nostrum labore
+            mollitia cum eum quasi ex cupiditate! Molestias, totam nam! Vero culpa officiis quam aliquid
+            voluptatum non doloribus sapiente enim harum consequatur accusamus dolore velit dolor atque,
+            fugiat est modi. Quo, iure fugiat molestias quis temporibus obcaecati. Nemo.</p>
+        <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto delectus iste quae temporibus
+            facilis perferendis inventore? Id nostrum culpa deleniti!</small>
+        <div class="d-flex flex-wrap justify-content-start my-5">
+            <div class="d-flex w-25">
+                <div class="d-flex flex-column w-50">
+                    <span>Easy</span>
+                    <small>Level</small>
+                </div>
+                <div class="d-flex flex-column w-50">
+                    <span>60</span>
+                    <small>Minutes</small>
+                </div>
+            </div>
+            <div class="d-flex w-75 justify-content-end">
+                <button class="d-flex mx-auto">Here Fav</button>
+            </div>
+        </div>
+    </div>
+</div>
