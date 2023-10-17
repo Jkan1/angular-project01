@@ -1,6 +1,6 @@
- * {
+ /* * {
      border: 1px solid black;
- }
+ } */
 
  .home-item-icons {
      min-width: 110px !important;
@@ -53,19 +53,19 @@
  }
 
  .item-cards-preview {
-    min-width: 225px !important;
-    min-height: 250px !important;
-    max-width: 225px !important;
-    max-height: fit-content !important;
-}
+     min-width: 225px !important;
+     min-height: 250px !important;
+     max-width: 225px !important;
+     max-height: fit-content !important;
+ }
 
  .banner-image-text-overlay {
-    min-width: 90% !important;
-    min-height: 120px !important;
-    max-width: 90% !important;
-    max-height: 120px !important;
-    margin-top: 35px !important;
-}
+     min-width: 90% !important;
+     min-height: 120px !important;
+     max-width: 90% !important;
+     max-height: 120px !important;
+     margin-top: 35px !important;
+ }
 
  .item-cards-text-overlay {
      min-width: 200px !important;
@@ -99,5 +99,5 @@
  }
 
  .text-gold-tint {
-    color: rgb(250, 220, 40);
+     color: rgb(250, 220, 40);
  }
