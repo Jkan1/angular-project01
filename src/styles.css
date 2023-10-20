@@ -122,3 +122,7 @@ input[type=number] {
 .text-gold-tint {
   color: rgb(250, 220, 40);
 }
+
+.nav-item .dropdown-menu a:active {
+  background: rgb(39, 42, 45);
+}
