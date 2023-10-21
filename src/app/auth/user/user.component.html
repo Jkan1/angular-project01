@@ -1,4 +1,4 @@
-<ng-template appPlaceholder ></ng-template>
+<!-- <ng-template appPlaceholder ></ng-template>
 <div class="row pt-5">
     <div class="col-sm-12 col-md-6 offset-md-3">
         <div *ngIf="isLoading" style="text-align:center">
@@ -17,4 +17,52 @@
             <h4>Email : {{  user.email }}</h4>
         </div>
     </div>
-</div>
+</div> -->
+
+<!-- <div class="container-fluid my-3 py-5 w-75">
+    <div class="container w-50 text-center">
+        <img src="https://picsum.photos/seed/profile/800/600" class="profile-picture rounded-circle img-fluid object-fit-center">
+    </div>
+    <div class="container py-4 text-center">
+        <h3><strong>Jon Doe</strong></h3>
+        <small class="py-2">Lorem, ipsum.lorem Lorem ipsum</small>
+        <p class="py-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur iusto amet unde.
+        </p>
+
+        <h6>Recipes shared : <strong>21</strong></h6>
+        <h6>Favourites : <strong>21</strong></h6>
+        <div class="d-flex flex-sm-row flex-wrap justify-content-center py-2">
+            <input type="button" value="{{ editMode? 'Save' : 'Edit' }}" (click)="onSwitchMode()" class="m-1 btn btn-primary">
+            <input type="button" value="Save" class="m-1 btn btn-dark">
+        </div>
+    </div>
+</div> -->
+
+
+
+<form class="container-fluid my-3 py-5 w-75">
+    <div *ngIf="!editMode" class="container w-100 text-center">
+        <img src="https://picsum.photos/seed/profile/800/600" class="mx-auto profile-picture rounded-circle img-fluid object-fit-center">
+    </div>
+    <div *ngIf="editMode" class="container100 text-center position-relative">
+        <img src="https://picsum.photos/seed/profile/800/600" class="profile-picture rounded-circle img-fluid object-fit-center">
+        <input type="file" class="position-absolute top-50 start-50 translate-middle bg-primary h-100 w-50 d-flex 
+            profile-picture rounded-circle form-control-sm opacity-75 cursor-pointer" placeholder="Name">
+    </div>
+    <div class="container py-4 flex-sm-row text-center">
+        <h3 *ngIf="!editMode"><strong>Jon Doe</strong></h3>
+        <input *ngIf="editMode" type="text" class="d-flex mx-auto form-control-lg w-50 text-center" placeholder="Name">
+        <small class="py-2">Lorem, ipsum.lorem Lorem ipsum</small>
+        <p *ngIf="!editMode" class="py-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur iusto amet unde.
+        </p>
+        <textarea *ngIf="editMode" class="my-3 p-2 w-100 text-center" rows="2" placeholder="About me"></textarea>
+        <h6>Recipes shared : <strong>21</strong></h6>
+        <h6>Favourites : <strong>21</strong></h6>
+        <div class="d-flex flex-sm-row flex-wrap justify-content-center py-2">
+            <input type="button" value="{{ editMode? 'Cancel' : 'Edit' }}" (click)="onSwitchMode()" class="m-1 btn btn-secondary">
+            <input type="button" value="Save" class="m-1 btn btn-dark">
+        </div>
+    </div>
+</form>

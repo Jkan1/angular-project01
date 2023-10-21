@@ -19,6 +19,7 @@ export class UserComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription;
   buttonTimer: number;
   private timerInterval;
+  editMode = false;
 
   constructor(private store: Store<AppState>) { }
 
@@ -68,6 +69,10 @@ export class UserComponent implements OnInit, OnDestroy {
         }
       }
     }, 1000);
+  }
+
+  onSwitchMode() {
+      this.editMode = !this.editMode;
   }
 
 }

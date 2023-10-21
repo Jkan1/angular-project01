@@ -30,6 +30,10 @@ input[type=number] {
   max-height: 110px !important;
 }
 
+.main-container {
+  min-height: 85vh !important;
+}
+
 .vh-20 {
   height: 20vh;
 }
@@ -125,4 +129,15 @@ input[type=number] {
 
 .nav-item .dropdown-menu a:active {
   background: rgb(39, 42, 45);
+}
+
+.profile-picture {
+  min-width: 250px !important;
+  min-height: 250px !important;
+  max-width: 250px !important;
+  max-height: 250px !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
