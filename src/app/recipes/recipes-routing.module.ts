@@ -7,13 +7,15 @@ import { RecipesResolver } from './recipes-resolver.service';
 import { RecipesComponent } from './recipes.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { VerifyGuard } from '../auth/verify/verify.guard';
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { RecipeListUserComponent } from './recipe-list-user/recipe-list-user.component';
+import { RecipeHomeComponent } from './recipe-home/recipe-home.component';
 
 const routes: Routes = [{
     path: "", component: RecipesComponent,
     canActivate: [AuthGuard, VerifyGuard],
     children: [
-        { path: "", component: RecipeListComponent },
+        { path: "", component: RecipeHomeComponent },
+        { path: "myrecipes", component: RecipeListUserComponent },
         { path: "new", component: RecipeEditComponent },
         { path: ":id", component: RecipeDetailComponent },
         { path: ":id/edit", component: RecipeEditComponent }
