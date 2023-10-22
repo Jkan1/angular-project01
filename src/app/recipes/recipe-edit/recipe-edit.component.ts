@@ -12,7 +12,7 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 
 const animations = [
   trigger('recipe-edit', [
-    state('normal',style({
+    state('normal', style({
       "opacity": 1,
       'transform': "translateX(0)"
     })),
@@ -32,15 +32,16 @@ const animations = [
   styleUrls: ['./recipe-edit.component.css'],
   animations: animations
 })
-export class RecipeEditComponent implements OnInit,OnDestroy {
+export class RecipeEditComponent implements OnInit, OnDestroy {
 
   id: number;
   editMode: boolean = false
   recipeForm: UntypedFormGroup;
   private storeSub: Subscription;
+  public previewFiles: Array<string> = [];
 
   ngOnDestroy() {
-    if(this.storeSub){
+    if (this.storeSub) {
       this.storeSub.unsubscribe();
     }
   }
@@ -68,14 +69,14 @@ export class RecipeEditComponent implements OnInit,OnDestroy {
     let recipeIng = new UntypedFormArray([]);
     if (this.editMode) {
       this.storeSub = this.store.select('recipes').pipe(map((recipeState) => {
-        return recipeState.recipes.find((recipe,index)=>{
+        return recipeState.recipes.find((recipe, index) => {
           return index === this.id;
         });
       })).subscribe((recipeObj) => {
         recipeName = recipeObj.name;
         imagePath = recipeObj.imagePath;
         desc = recipeObj.description;
-        if ( ['ingredients']) {
+        if (['ingredients']) {
           for (let ing of recipeObj.ingredients) {
             recipeIng.push(
               new UntypedFormGroup({
@@ -138,4 +139,21 @@ export class RecipeEditComponent implements OnInit,OnDestroy {
     (<UntypedFormArray>this.recipeForm.get('ingredientsArray')).removeAt(index);
   }
 
+  onSelectFile(event) {
+    for (const file of event.target.files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        file.src = event.target.result.toString();
+        const imageFile = new Image();
+        imageFile.src = file.src;
+        imageFile.onload = () => {
+          file.width = imageFile.width;
+          file.height = imageFile.height;
+          console.log(imageFile.width, imageFile.height);
+        };
+        this.previewFiles.push(file);
+      }
+    }
+  }
 }

@@ -103,7 +103,7 @@
                 </div>
                 <div class="form-group d-flex flex-sm-row flex-wrap flex-fill p-2">
                     <label class="form-label d-flex mx-1 fxs-3">Time (in minutes) : - </label>
-                    <input class="form-control d-flex flex-fill mx-1 fxs-3 text-center" type="text" name="" id="">
+                    <input class="form-control d-flex flex-fill mx-1 fxs-3 text-center" type="time" name="" id="">
                 </div>
             </div>
             <div class="form-group d-flex flex-sm-row flex-wrap p-2">
@@ -113,20 +113,16 @@
             <div class="form-group p-2">
                 <label class="form-text text-center w-100 mb-3">Images</label>
                 <div class="d-flex flex-sm-row flex-wrap justify-content-evenly">
-                    <div class="d-flex flex-column item-cards-preview fit">
-                        <img src="https://picsum.photos/seed/box1/400/400" class="img-fluid object-fit-cover h-75" alt="...">
-                        <small class="fxs-2">Lorem ipsum dolor sit amet consectetur</small>
-                    </div>
-                    <div class="d-flex flex-column item-cards-preview">
-                        <img src="https://picsum.photos/seed/box1/400/400" class="img-fluid object-fit-cover h-75" alt="...">
-                        <small class="fxs-2">Lorem ipsum dolor sit amet consectetur</small>
-                    </div>
-                    <div class="d-flex flex-column item-cards-preview">
-                        <img src="https://picsum.photos/seed/box1/400/400" class="img-fluid object-fit-cover h-75" alt="...">
-                        <small class="fxs-2">Lorem ipsum dolor sit amet consectetur</small>
+                    <div class="d-flex flex-column item-cards-preview fit"
+                        *ngFor="let inputFile of previewFiles; let i = index;">
+                        <img [src]="inputFile.src" class="img-fluid object-fit-cover h-75" alt="...">
+                        <small class="fxs-2 text-center">
+                            {{inputFile.width}}x{{inputFile.height}} | {{inputFile.size / 1024 | number : '1.0-0'}} KB
+                        </small>
                     </div>
                 </div>
-                <input class="form-control form-control-sm d-flex mx-auto mt-2 w-50" type="file" multiple name="" id="">
+                <input class="form-control form-control-sm d-flex mx-auto mt-2 w-50" type="file" multiple accept="image/*"
+                (change)="onSelectFile($event)" name="" id="">
             </div>
 
         </form>
