@@ -7,15 +7,15 @@ import { VerifyComponent } from './auth/verify/verify.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
-    // {
-    //     path: 'user',
-    //     canActivate: [AuthGuard],
-    //     component: UserComponent
-    // },
-    // {
-    //     path: 'verify/_/auth/valid',
-    //     component: VerifyComponent
-    // },
+    {
+        path: 'user',
+        canActivate: [AuthGuard],
+        component: UserComponent
+    },
+    {
+        path: 'verify/_/auth/valid',
+        component: VerifyComponent
+    },
     {
         path: 'recipes',
         loadChildren: () => import('./recipes/recipe.module').then((m) => m.RecipeModule)
