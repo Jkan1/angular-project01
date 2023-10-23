@@ -19,9 +19,10 @@ export class RecipeEffects {
         }),
         map(
             (data) => {
+                console.log('data', data);
                 if (data) {
                     return data.map(recipe => {
-                        return { ...recipe, ingredients: recipe.ingredients || [] }
+                        return { ...recipe, ingredients: [] }
                     });
                 }
                 return [];

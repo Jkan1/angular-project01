@@ -8,7 +8,7 @@ const recipeAnimations = [
     transition('void => *', [
       style({
         "opacity": 0,
-        'transform': "translateX(-100px)"
+        'transform': "translateY(100px)"
       }),
       animate(500)
     ])

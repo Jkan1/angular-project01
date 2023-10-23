@@ -74,7 +74,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         });
       })).subscribe((recipeObj) => {
         recipeName = recipeObj.name;
-        imagePath = recipeObj.imagePath;
+        imagePath = recipeObj.images[0];
         desc = recipeObj.description;
         if (['ingredients']) {
           for (let ing of recipeObj.ingredients) {
@@ -102,9 +102,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const newRecipe = new Recipe(
+      new Date().getTime().toString(),
       this.recipeForm.value['name'],
       this.recipeForm.value['desc'],
-      this.recipeForm.value['imagePath'],
+      this.recipeForm.value['desc'],
+      [this.recipeForm.value['imagePath']],
       this.recipeForm.value['ingredientsArray']
     );
     if (this.editMode) {

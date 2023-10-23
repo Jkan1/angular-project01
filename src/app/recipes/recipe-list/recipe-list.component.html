@@ -1,24 +1,9 @@
-<!-- <div class="row">
-    <div class="col-sx-12">
-        <h3>Want to add a new recipe?</h3>
-        <button class="btn btn-primary" (click)="onAddRecipe()">Add Recipe</button>
-    </div>
-</div>
-<hr>
-<div class="row">
-    <div class="col-xs-12">
-
-        <h3 *ngIf="recipes && recipes.length">Our Recipies</h3>
-
-        <app-recipe-item *ngFor="let recipe of recipes; let i = index;" [recipe]="recipe" [index]="i">
-        </app-recipe-item>
-
-    </div>
-</div> -->
-
 <div class="d-flex flex-sm-row flex-wrap mt-4 p-1 justify-content-center">
-
-    <app-recipe-item *ngFor="let recipe of [1,2,3,4,5,6,7,8]; let i = index;" [recipe]="recipe" [index]="i">
+    <h3 *ngIf="!recipes || !recipes.length" class="mt-2">No recipies found, Please add some!</h3>
+    <app-recipe-item *ngFor="let recipe of recipes; let i = index;" [recipe]="recipe" [index]="i">
     </app-recipe-item>
-
+</div>
+<div class="container">
+    <h3>Want to add a new recipe?</h3>
+    <button class="btn btn-dark" (click)="onAddRecipe()">Add Recipe</button>
 </div>

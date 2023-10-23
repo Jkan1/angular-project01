@@ -1,24 +1,13 @@
-<!-- <a itemPointer class="list-group-item clearfix m-1" [@recipe-list]="" 
-    [routerLink]="[recipeIndex]"
-    routerLinkActive="active">
-    <div class="float-left">
-        <h4>{{recipe.name}}</h4>
-        <p>{{recipe.description}}</p>
-    </div>
-    <span class="float-right">
-        <img [src]="recipe.imagePath" alt="{{recipe.name}}" class="img-fluid" style="max-height: 50px;">
-    </span>
-</a> -->
-
-<div [routerLink]="[recipe]" class="d-flex item-cards border-black card text-bg-light m-4 mx-2 position-relative">
-    <img src="https://picsum.photos/seed/box{{recipe}}0/225/250" class="card-img object-fit-cover h-100" alt="...">
+<div itemPointer [routerLink]="[recipe.id]" routerLinkActive="active" [@recipe-list]=""
+    class="clearfix d-flex item-cards card shadow-sm text-bg-light m-4 mx-2 position-relative overflow-hidden">
+    <img [src]="recipe.images[0]" class="card-img img-fluid object-fit-cover h-100" alt="{{recipe.name}}">
     <div class="card-img-overlay mx-auto position-absolute top-50 bg-white 
         text-center item-cards-text-overlay pt-3">
         <span class="badge position-absolute top-0 translate-middle text-bg-danger">
-            <small class="card-title">Card title</small>
+            <small class="card-title">{{recipe.name}}</small>
         </span>
         <p class="card-text fxs-3 overflow-hidden">
-            This is a wider card with supporting text below
+            {{recipe.description}}
         </p>
     </div>
 </div>
