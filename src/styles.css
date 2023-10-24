@@ -84,6 +84,10 @@ input[type=number] {
   max-height: fit-content !important;
 }
 
+.banner-image {
+  width: 400px !important;
+}
+
 .banner-image-text-overlay {
   min-width: 90% !important;
   min-height: 120px !important;
