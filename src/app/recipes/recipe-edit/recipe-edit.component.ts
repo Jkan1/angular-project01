@@ -105,7 +105,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       new Date().getTime().toString(),
       this.recipeForm.value['name'],
       this.recipeForm.value['desc'],
-      this.recipeForm.value['desc'],
+      this.recipeForm.value['steps'],
+      this.recipeForm.value['level'],
+      this.recipeForm.value['duration'],
       [this.recipeForm.value['imagePath']],
       this.recipeForm.value['ingredientsArray']
     );
