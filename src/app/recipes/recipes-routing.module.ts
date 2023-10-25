@@ -12,13 +12,12 @@ import { RecipeHomeComponent } from './recipe-home/recipe-home.component';
 
 const routes: Routes = [{
     path: "", component: RecipesComponent,
-    canActivate: [AuthGuard, VerifyGuard],
     children: [
         { path: "", component: RecipeHomeComponent },
-        { path: "myrecipes", component: RecipeListUserComponent },
-        { path: "new", component: RecipeEditComponent },
+        { path: "myrecipes", component: RecipeListUserComponent, canActivate: [AuthGuard, VerifyGuard] },
+        { path: "new", component: RecipeEditComponent, canActivate: [AuthGuard, VerifyGuard] },
         { path: ":id", component: RecipeDetailComponent },
-        { path: ":id/edit", component: RecipeEditComponent }
+        { path: ":id/edit", component: RecipeEditComponent, canActivate: [AuthGuard, VerifyGuard] }
     ]
 }]
 
