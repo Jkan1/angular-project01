@@ -1,4 +1,5 @@
-<div class="d-flex flex-sm-row flex-wrap mt-4 p-1 justify-content-center">
+<h5 *ngIf="recipes && recipes.length" class="mt-4 p-2 text-center">Unleash Your Inner Chef with Our Flavorful Recipes!</h5>
+<div class="d-flex flex-sm-row flex-wrap mt-2 p-1 justify-content-center">
     <h3 *ngIf="!recipes || !recipes.length" class="mt-2">No recipies found, Please add some!</h3>
     <app-recipe-item *ngFor="let recipe of recipes; let i = index;" [recipe]="recipe" [index]="i">
     </app-recipe-item>
