@@ -1,13 +1,11 @@
-<ng-template appPlaceholder ></ng-template>
-<div class="row pt-5">
-    <div class="col-sm-12 col-md-6 offset-md-3">
-        <div  style="text-align:center">
-            <h4>Please Wait while we verify your identity ...</h4>
-            <br>
-            <loading-spinner *ngIf="isLoading"></loading-spinner>
-            <br>
-            <h5 class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</h5>
-            <h5 class="alert alert-success" *ngIf="successMessage">{{successMessage}}</h5>
-        </div>
+<ng-template appPlaceholder></ng-template>
+<div class="container pt-5 mt-5">
+    <div class="text-center">
+        <h4>Please wait while we verify your identity ...</h4>
+        <br>
+        <loading-spinner *ngIf="isLoading"></loading-spinner>
+        <br>
+        <h5 class="w-50 mx-auto alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</h5>
+        <h5 class="w-50 mx-auto alert alert-success" *ngIf="!errorMessage">{{successMessage}}</h5>
     </div>
 </div>

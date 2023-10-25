@@ -21,22 +21,22 @@ export class VerifyComponent implements OnInit {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       if (!params || !params.mode || !params.oobCode || params.oobCode.length < 8) {
         this.isLoading = false;
-        this.errorMessage = "Sorry, We were Unable to verify your Identity.\n Please try after some time";
+        this.errorMessage = "Sorry, unable to verify your identity.\nPlease try after some time";
       } else {
         this.store.select('auth').subscribe((state) => {
           if (!state || !state.user) {
             this.isLoading = false;
-            this.errorMessage = "Sorry, Please Sign Into your account first.\n\n Redirecting you to Login in 5 seconds";
+            this.errorMessage = "Sorry, please login to your account first.\n\nRedirecting to login ...";
             setTimeout(()=>{
               this.router.navigate(['/auth']);
-            },5000)
+            },6000)
           } else {
             if (state.user.emailVerified) {
               this.isLoading = false;
-              this.successMessage = "Verification Successful\n\n Redirecting in 5 seconds";
+              this.successMessage = "Verification successful!\n\nRedirecting to home ...";
               setTimeout(()=>{
                 this.router.navigate(['/']);
-              },5000)
+              },6000)
             } else {
               if (state.authError || state.loading) {
                 this.isLoading = state.loading;
