@@ -25,9 +25,9 @@
             <input type="button" value="Save" class="m-1 btn btn-dark">
         </div>
         <div class="alert alert-secondary mt-3 text-center" *ngIf="!isVerified">
-            <p>Please Verify your Email</p>
+            <p>Please verify email to unlock full access</p>
             <button [disabled]="buttonTimer > 0" class="btn btn-dark" (click)="onSendEmail()">
-                Send Verification Email {{buttonTimer? buttonTimer+'sec':'Now'}}
+                Send verification email {{buttonTimer? buttonTimer+'sec':'now!'}}
             </button>
         </div>
     </div>
