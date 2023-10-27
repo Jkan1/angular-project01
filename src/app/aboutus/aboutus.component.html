@@ -1,9 +1,9 @@
-
 <div class="container-fluid my-2 py-2 w-100">
-    <div class="container about-us-cover text-center overflow-n w-100">
-        <img src="https://picsum.photos/seed/profile/800/100" class="about-us-cover object-fit-cover w-100">
+    <div class="container about-us-cover text-center w-100 overflow-hidden">
+        <img src="https://picsum.photos/seed/13/800/200" class="object-fit-cover h-100 w-100"
+            [@fadeAnimation]="animationState">
     </div>
-    <div class="container py-4 text-left">
+    <div class="container py-5 text-left">
         <h3><strong>About us</strong></h3>
         <small class="py-2 text-secondary">Welcome to our recipes website!</small>
         <p class="pt-2">
@@ -33,7 +33,7 @@
             <br>
         </p>
 
-        <h6  class="text-secondary">
+        <h6 class="text-secondary">
             Thank you for choosing our recipes website as your trusted source for delicious recipes.
             <br><br>
             <strong class="text-dark">
