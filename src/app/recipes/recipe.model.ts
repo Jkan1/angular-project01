@@ -8,7 +8,7 @@ export type RecipeImage = {
 };
 
 export class Recipe {
-    public id: string;
+    public uid: string;
     public name: string;
     public description: string;
     public steps: string;
@@ -19,7 +19,6 @@ export class Recipe {
     public likes: number;
 
     constructor(
-        id: string,
         name: string,
         desc: string,
         steps: string,
@@ -27,7 +26,6 @@ export class Recipe {
         duration: number,
         img: RecipeImage[]
     ) {
-        this.id = id;
         this.name = name;
         this.description = desc;
         this.steps = steps;

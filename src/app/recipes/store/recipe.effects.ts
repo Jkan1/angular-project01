@@ -29,17 +29,22 @@ export class RecipeEffects {
         ofType(FETCH_RECIPES),
         switchMap((actionData: FetchRecipes) => {
             let fetchUrl = environment.dataBaseUrl;
-            if(actionData.userId)
+            if (actionData.userId)
                 fetchUrl += '?orderBy="createdBy"&startAt="' + actionData.userId + '"&endAt="' + actionData.userId + '"';
             return this.httpClient.get<Recipe[]>(fetchUrl)
         }),
         map(
             (data) => {
-                console.log('data', data);
                 if (data) {
-                    return Object.values(data).map(recipe => {
-                        return { ...recipe, ingredients: [] }
-                    });
+                    const result = [];
+                    for (const key in data) {
+                        if (Object.prototype.hasOwnProperty.call(data, key)) {
+                            const recipe = data[key];
+                            recipe.uid = key;
+                            result.push(recipe);
+                        }
+                    }
+                    return result;
                 }
                 return [];
             }
@@ -56,14 +61,16 @@ export class RecipeEffects {
         switchMap(([actionState, recipeState]) => {
             return this.httpClient.put(environment.dataBaseUrl, recipeState.recipes)
         })
-    ), { dispatch: false })
+    ), { dispatch: false });
 
     addNewRecipe = createEffect(() => this.action$.pipe(
         ofType(ADD_RECIPE),
         switchMap((actionData: AddRecipe) => {
             const userData = JSON.parse(localStorage.getItem('userData'));
-            if (!userData || !userData._token) return of(this.handleError('Unauthorized'));
-            return this.httpClient.post(environment.dataBaseUrl + '?auth=' + userData?._token, actionData.payload)
+            if (!userData || !userData.id || !userData._token) return of(this.handleError('Unauthorized'));
+            const payloadData = Object.assign({}, actionData.payload);
+            payloadData.createdBy = userData.id;
+            return this.httpClient.post(environment.dataBaseUrl + '?auth=' + userData?._token, payloadData)
                 .pipe(
                     map(() => {
                         return this.handleSuccess(0, {});
@@ -73,7 +80,7 @@ export class RecipeEffects {
                     })
                 )
         })
-    ), { dispatch: true })
+    ), { dispatch: true });
 
     constructor(
         private action$: Actions,

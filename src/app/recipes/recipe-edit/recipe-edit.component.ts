@@ -109,7 +109,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       height: item.height
     }));
     const newRecipe = new Recipe(
-      new Date().getTime().toString(),
       this.recipeForm.value['name'],
       this.recipeForm.value['desc'],
       this.recipeForm.value['steps'],

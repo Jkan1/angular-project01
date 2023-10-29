@@ -1,4 +1,4 @@
-<div itemPointer [routerLink]="[recipe.id]" routerLinkActive="active" [@recipe-list]=""
+<div itemPointer [routerLink]="'/recipes/'+[recipe.uid]" routerLinkActive="active" [@recipe-list]=""
     class="clearfix d-flex item-cards card shadow-sm text-bg-light m-4 mx-2 position-relative overflow-hidden">
     <img [src]="recipe.images && recipe.images.length && recipe.images[0] && recipe.images[0].src" class="card-img img-fluid object-fit-cover h-100" alt="{{recipe.name}}">
     <div class="card-img-overlay mx-auto position-absolute top-50 bg-white 
