@@ -23,7 +23,7 @@
 <div class="container-fluid">
     <h5 class="text-center mt-3"><strong>My Recipes</strong></h5>
     <div class="d-flex flex-sm-row flex-wrap mt-2 p-1 justify-content-center">
-        <h3 *ngIf="!recipes || !recipes.length" class="mt-2">No recipies found, Please add some!</h3>
+        <h3 *ngIf="!recipes || !recipes.length" class="mt-2">No recipies yet!</h3>
         <app-recipe-item *ngFor="let recipe of recipes; let i = index;" [recipe]="recipe" [index]="i">
         </app-recipe-item>
     </div>

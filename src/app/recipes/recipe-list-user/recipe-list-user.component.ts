@@ -25,15 +25,13 @@ export class RecipeListUserComponent implements OnInit, OnDestroy {
     private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData && userData.id)  this.store.dispatch(new FetchRecipes(userData.id));
     this.subscription = this.store.select('recipes').pipe(
       map(recipeState => recipeState.recipes)
     ).subscribe(
       (recipes: Recipe[]) => {
-        if (!recipes || !recipes.length) {
-          this.store.dispatch(new FetchRecipes());
-        } else {
-          this.recipes = recipes;
-        }
+        this.recipes = recipes;
       }
     )
   }

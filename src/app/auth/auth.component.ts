@@ -32,7 +32,7 @@ const animations = [
     animations: animations
 })
 export class AuthComponent implements OnInit, OnDestroy {
-    isLoginMode: boolean = false;
+    isLoginMode: boolean = true;
     isLoading: boolean = false;
     animationState = 'login'
     @ViewChild(AppPlaceholderDirective) alertHost: AppPlaceholderDirective;
