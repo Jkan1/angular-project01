@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
 import { map } from 'rxjs/operators';
 import { Logout } from '../auth/store/auth.actions';
-import { FetchRecipes, StoreRecipes } from '../recipes/store/recipe.actions';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -22,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     constructor(private store: Store<AppState>) { }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.authSubscription = this.store.select('auth')
             .pipe(
                 map((authState) => {
@@ -43,13 +42,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     onLogout() {
         this.store.dispatch(new Logout());
-    }
-
-    onSaveRecipe() {
-        this.store.dispatch(new StoreRecipes());
-    }
-
-    onFetchRecipe() {
-        this.store.dispatch(new FetchRecipes());
     }
 }
