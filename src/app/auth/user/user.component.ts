@@ -5,6 +5,7 @@ import { AppState } from 'src/app/store/app.reducer';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SendEmailStart } from '../store/auth.actions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user',
@@ -20,6 +21,7 @@ export class UserComponent implements OnInit, OnDestroy {
   buttonTimer: number;
   private timerInterval;
   editMode = false;
+  sampleImage: string = environment.sampleProfileImage
 
   constructor(private store: Store<AppState>) { }
 

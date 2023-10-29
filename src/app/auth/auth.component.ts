@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, OnDestroy, OnInit } from "@angular/core";
+import { Component, ViewChild, OnDestroy, OnInit } from "@angular/core";
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
@@ -32,7 +32,7 @@ const animations = [
     animations: animations
 })
 export class AuthComponent implements OnInit, OnDestroy {
-    isLoginMode: boolean = true;
+    isLoginMode: boolean = false;
     isLoading: boolean = false;
     animationState = 'login'
     @ViewChild(AppPlaceholderDirective) alertHost: AppPlaceholderDirective;
@@ -41,7 +41,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     private storeSub: Subscription;
 
     constructor(
-        private factory: ComponentFactoryResolver,
         private store: Store<AppState>,
         private router: Router
     ) { }
@@ -70,13 +69,14 @@ export class AuthComponent implements OnInit, OnDestroy {
         const password = authForm.value.password;
         const userName = authForm.value.userName;
         const profileImage = authForm.value.profileImage;
+        const inviteCode = authForm.value.inviteCode;
         if (environment.production && email.match('yopmail.com')) {
             return;
         }
         if (this.isLoginMode) {
             this.store.dispatch(new LoginStart({ email, password }))
         } else {
-            this.store.dispatch(new SignupStart({ email, password, userName, profileImage }));
+            this.store.dispatch(new SignupStart({ email, password, userName, profileImage, inviteCode }));
         }
 
         this.store.select('auth').subscribe((authState) => { });
@@ -85,10 +85,9 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     onShowError(errorMessage) {
-        const alertComponentFactory = this.factory.resolveComponentFactory(AlertComponent);
         const hostViewContainerRef = this.alertHost.viewContainerRef;
         hostViewContainerRef.clear();
-        const alertComponentRef = hostViewContainerRef.createComponent(alertComponentFactory);
+        const alertComponentRef = hostViewContainerRef.createComponent(AlertComponent);
         alertComponentRef.instance.message = errorMessage;
         this.closeSub = alertComponentRef.instance.close.subscribe(() => {
             this.closeSub.unsubscribe();

@@ -3,10 +3,11 @@
         <loading-spinner></loading-spinner>
     </div>
     <div *ngIf="!isLoading && !editMode" class="container w-100 text-center">
-        <img src="{{user.profileImage}}" class="mx-auto profile-picture rounded-circle img-fluid object-fit-center">
+        <img src="{{user.profileImage || sampleImage}}" class="mx-auto profile-picture rounded-circle img-fluid object-fit-center">
     </div>
     <div *ngIf="!isLoading && editMode" class="container100 text-center position-relative">
-        <img src="{{user.profileImage}}" class="profile-picture rounded-circle img-fluid object-fit-center">
+        <img src="{{user.profileImage || sampleImage}}"
+             class="profile-picture rounded-circle img-fluid object-fit-center">
         <input type="file" class="position-absolute top-50 start-50 translate-middle bg-primary h-100 w-50 d-flex 
             profile-picture rounded-circle form-control-sm opacity-0 cursor-pointer" placeholder="Name">
     </div>
