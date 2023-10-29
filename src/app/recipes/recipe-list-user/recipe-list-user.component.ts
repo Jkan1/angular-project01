@@ -43,7 +43,7 @@ export class RecipeListUserComponent implements OnInit, OnDestroy {
   }
 
   onAddRecipe() {
-    this.routerService.navigate(['new'], { relativeTo: this.activeRoute })
+    this.routerService.navigate(['../new'], { relativeTo: this.activeRoute })
   }
 
 }
