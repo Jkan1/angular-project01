@@ -145,3 +145,8 @@ input[type=number] {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.about-us-cover {
+  min-height: 150px !important;
+  max-height: 150px !important;
+}
