@@ -43,6 +43,12 @@ export class AuthEffects {
             return new AuthFail(eMessage);
         }
         switch (errorRes.error.error.message) {
+            case 'INVITE_CODE_INVALID':
+                eMessage = "Invite code is invalid!";
+                break;
+            case 'INVITE_CODE_EXPIRED':
+                eMessage = "This invite code is expired!";
+                break;
             case 'EMAIL_EXISTS':
                 eMessage = "This email already exists";
                 break;
@@ -63,54 +69,79 @@ export class AuthEffects {
         return new AuthFail(eMessage);
     }
 
-    
+
     authSignup = createEffect(() => this.action$.pipe(
         ofType(SIGNUP_START),
         switchMap((signupAction: SignupStart) => {
-            return this.httpClient.post<AuthResponseData>(this.signupUrl, {
-                email: signupAction.payload.email,
-                password: signupAction.payload.password,
-                returnSecureToken: true
-            }).pipe(
-                switchMap((resData) => {
-                    const localId = resData.localId;
-                    const idToken = resData.idToken;
-                    const email = resData.email;
-                    const expiresIn = resData.expiresIn;
-                    return this.httpClient.post<any>(this.setProfileUrl, {
-                        idToken: idToken,
-                        displayName: signupAction.payload.userName,
-                        photoUrl: signupAction.payload.profileImage,
-                        returnSecureToken:true
-                    }).pipe(
-                        map((resData) => {
-                            let emailVerified: boolean;
-                            let displayName: string;
-                            let profileImage: string;
-                            if (resData) {
-                                emailVerified = resData.emailVerified;
-                                displayName = resData.displayName;
-                                profileImage = resData.photoUrl;
-                            }
-                            return this.handleAuthentication(
-                                expiresIn,
-                                email,
-                                localId,
-                                idToken,
-                                emailVerified,
-                                displayName,
-                                profileImage
+            const inviteCode = signupAction.payload.inviteCode?.split('-')[0];
+            return this.httpClient.get<Boolean>(environment.inviteCodeUrl + inviteCode + '.json')
+                .pipe(
+                    switchMap((response) => {
+                        if (response === true)
+                            return of(this.handleError({
+                                error: { error: { message: 'INVITE_CODE_EXPIRED' } }
+                            }))
+                        if (response === false)
+                            return this.httpClient.post<AuthResponseData>(this.signupUrl, {
+                                email: signupAction.payload.email,
+                                password: signupAction.payload.password,
+                                returnSecureToken: true
+                            }).pipe(
+                                switchMap((resData) => {
+                                    return this.httpClient.put<Boolean>(environment.inviteCodeUrl + inviteCode + '.json?auth=' + resData.idToken, true)
+                                        .pipe(
+                                            switchMap((response) => {
+                                                const localId = resData.localId;
+                                                const idToken = resData.idToken;
+                                                const email = resData.email;
+                                                const expiresIn = resData.expiresIn;
+                                                return this.httpClient.post<any>(this.setProfileUrl, {
+                                                    idToken: idToken,
+                                                    displayName: signupAction.payload.userName,
+                                                    photoUrl: signupAction.payload.profileImage,
+                                                    returnSecureToken: true
+                                                }).pipe(
+                                                    map((resData) => {
+                                                        let emailVerified: boolean;
+                                                        let displayName: string;
+                                                        let profileImage: string;
+                                                        if (resData) {
+                                                            emailVerified = resData.emailVerified;
+                                                            displayName = resData.displayName;
+                                                            profileImage = resData.photoUrl;
+                                                        }
+                                                        return this.handleAuthentication(
+                                                            expiresIn,
+                                                            email,
+                                                            localId,
+                                                            idToken,
+                                                            emailVerified,
+                                                            displayName,
+                                                            profileImage
+                                                        );
+                                                    }),
+                                                    catchError((errorRes) => {
+                                                        return of(this.handleError(errorRes));
+                                                    })
+                                                );
+                                            }),
+                                            catchError((errorRes) => {
+                                                return of(this.handleError(errorRes));
+                                            })
+                                        )
+                                }),
+                                catchError((errorRes) => {
+                                    return of(this.handleError(errorRes));
+                                })
                             );
-                        }),
-                        catchError((errorRes) => {
-                            return of(this.handleError(errorRes));
-                        })
-                    );
-                }),
-                catchError((errorRes) => {
-                    return of(this.handleError(errorRes));
-                })
-            );
+                        return of(this.handleError({
+                            error: { error: { message: 'INVITE_CODE_INVALID' } }
+                        }))
+                    }),
+                    catchError((errorRes) => {
+                        return of(this.handleError(errorRes));
+                    })
+                )
         })
     ));
 
