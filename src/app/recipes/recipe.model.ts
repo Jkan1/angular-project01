@@ -1,4 +1,11 @@
-import { Ingredient } from '../shared/ingredient.model';
+// import { Ingredient } from '../shared/ingredient.model';
+
+export type RecipeImage = {
+    filename: string,
+    src: string,
+    width: string,
+    height: string
+};
 
 export class Recipe {
     public id: string;
@@ -7,8 +14,9 @@ export class Recipe {
     public steps: string;
     public level: number;
     public duration: number;
-    public images: string[];
-    public ingredients: Ingredient[];
+    public images: RecipeImage[];
+    public createdBy: string;
+    public likes: number;
 
     constructor(
         id: string,
@@ -17,8 +25,7 @@ export class Recipe {
         steps: string,
         level: number,
         duration: number,
-        img: string[],
-        ing: Ingredient[]
+        img: RecipeImage[]
     ) {
         this.id = id;
         this.name = name;
@@ -27,6 +34,5 @@ export class Recipe {
         this.level = level;
         this.duration = duration;
         this.images = img;
-        this.ingredients = ing;
     }
 }

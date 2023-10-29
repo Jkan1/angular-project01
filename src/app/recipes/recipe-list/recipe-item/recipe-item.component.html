@@ -1,6 +1,6 @@
 <div itemPointer [routerLink]="[recipe.id]" routerLinkActive="active" [@recipe-list]=""
     class="clearfix d-flex item-cards card shadow-sm text-bg-light m-4 mx-2 position-relative overflow-hidden">
-    <img [src]="recipe.images[0]" class="card-img img-fluid object-fit-cover h-100" alt="{{recipe.name}}">
+    <img [src]="recipe.images[0] && recipe.images[0].src" class="card-img img-fluid object-fit-cover h-100" alt="{{recipe.name}}">
     <div class="card-img-overlay mx-auto position-absolute top-50 bg-white 
         text-center item-cards-text-overlay pt-3">
         <span class="badge position-absolute top-0 translate-middle text-bg-danger">
