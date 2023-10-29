@@ -12,25 +12,25 @@
         <h3 class="text-center text-uppercase">create new recipe</h3>
         <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" [@recipe-edit]="">
             <div class="form-group d-flex flex-sm-row flex-wrap p-2">
-                <label class="form-label d-flex mx-1 fxs-3">Name : - </label>
+                <label class="form-label d-flex mx-1 fxs-3" for="name">Name : - </label>
                 <input class="form-control shadow-none d-flex flex-fill mx-1 fxs-3" type="text" name="name"
-                    formControlName="name">
+                    id="name" formControlName="name" autocomplete="name">
             </div>
             <div class="form-group d-flex flex-sm-row flex-wrap p-2">
-                <label class="form-label d-flex mx-1 fxs-3">Description : - </label>
+                <label class="form-label d-flex mx-1 fxs-3" for="desc">Description : - </label>
                 <textarea class="form-control shadow-none form-control-sm d-flex flex-fill mx-1 fxs-3" type="text"
-                    name="desc" formControlName="desc" rows="2"></textarea>
+                    name="desc" id="desc" formControlName="desc" rows="2"></textarea>
             </div>
             <div class="form-group d-flex flex-sm-row flex-wrap p-2">
-                <label class="form-label d-flex mx-1 fxs-3">Ingredients/Steps : - </label>
+                <label class="form-label d-flex mx-1 fxs-3" for="steps">Ingredients/Steps : - </label>
                 <textarea class="form-control shadow-none form-control-lg d-flex flex-fill mx-1 fxs-3" type="text"
-                    name="steps" formControlName="steps" rows="10"></textarea>
+                    name="steps" id="steps" formControlName="steps" rows="10"></textarea>
             </div>
             <div class="d-flex flex-sm-row flex-wrap p-2">
                 <div class="form-group d-flex flex-sm-row flex-wrap flex-fill p-2">
-                    <label class="form-label d-flex mx-1 fxs-3">Level : - </label>
+                    <label class="form-label d-flex mx-1 fxs-3" for="level">Level : - </label>
                     <select class="form-control shadow-none d-flex flex-fill mx-1 fxs-3 text-center" name="level"
-                        formControlName="level">
+                        id="level" formControlName="level">
                         <option selected value="select">--select--</option>
                         <option value="easy">Easy</option>
                         <option value="average">Average</option>
@@ -39,13 +39,13 @@
                     </select>
                 </div>
                 <div class="form-group d-flex flex-sm-row flex-wrap flex-fill p-2">
-                    <label class="form-label d-flex mx-1 fxs-3">Time (in minutes) : - </label>
+                    <label class="form-label d-flex mx-1 fxs-3" for="duration">Time (in minutes) : - </label>
                     <input class="form-control d-flex flex-fill mx-1 fxs-3 text-center" type="time" name="duration"
-                        formControlName="duration">
+                        id="duration" formControlName="duration">
                 </div>
             </div>
             <div class="form-group p-2">
-                <label class="form-text text-center w-100 mb-3">Images</label>
+                <label class="form-text text-center w-100 mb-3" for="images">Images</label>
                 <div class="d-flex flex-sm-row flex-wrap justify-content-evenly">
                     <div class="d-flex flex-column item-cards-preview fit position-relative"
                         *ngFor="let inputFile of previewFiles; let i = index;">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <input class="form-control form-control-sm d-flex mx-auto mt-2 w-50" type="file" multiple
-                    accept="image/*" (change)="onSelectFile($event)" [disabled]="isLoading">
+                    accept="image/*" (change)="onSelectFile($event)" [disabled]="isLoading" name="images" id="images">
             </div>
             <div class="form-group d-flex flex-sm-row flex-wrap p-2 mt-3">
                 <button type="button" class="d-flex btn btn-dark" (click)="onCancel()">Back</button>

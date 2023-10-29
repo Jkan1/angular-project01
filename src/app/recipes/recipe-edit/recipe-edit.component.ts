@@ -178,6 +178,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.previewFiles.push(file);
       }
     }
+    event.target.value = '';
   }
 
   onImageRemove(imageIndex) {
