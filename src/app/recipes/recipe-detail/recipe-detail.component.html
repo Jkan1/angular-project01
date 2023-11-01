@@ -12,7 +12,7 @@
             <div class="carousel-inner vh-65">
               <div class="carousel-item h-100 w-100" *ngFor="let image of recipeDetails.images; let i = index;"
                 [ngClass]="{'active': (i === 0)}">
-                <img [src]="image.src" class="mx-auto d-block object-fit-contain" alt="...">
+                <img [src]="image.src" class="mx-auto d-block object-fit-contain h-100 w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block text-dark">
                     <small>{{image.width}}x{{image.height}}</small>
                   </div>
