@@ -26,12 +26,13 @@ export function recipeReducer(state = initialState, action: RecipeActions) {
                 loading: true
             };
         case UPDATE_RECIPE:
-            const updateRecipe = {
-                ...state.recipes[action.payload.index],
+            const recipeIndex = state.recipes.findIndex(recipe => recipe.uid == action.payload.uid);
+            const updatedRecipe = {
+                ...state.recipes[recipeIndex],
                 ...action.payload.recipe
             };
             const newRecipes = [...state.recipes];
-            newRecipes[action.payload.index] = updateRecipe;
+            newRecipes[recipeIndex] = updatedRecipe;
             return {
                 ...state,
                 recipes: newRecipes

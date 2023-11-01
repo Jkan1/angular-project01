@@ -31,7 +31,7 @@ export class AddRecipe implements Action {
 
 export class UpdateRecipe implements Action {
     readonly type = UPDATE_RECIPE;
-    constructor(public payload: { index: number, recipe: Recipe }) { }
+    constructor(public payload: { uid: string, recipe: Recipe }) { }
 }
 
 export class DeleteRecipe implements Action {

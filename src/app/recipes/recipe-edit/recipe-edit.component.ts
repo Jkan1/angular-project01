@@ -36,7 +36,7 @@ const animations = [
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
 
-  id: number;
+  id: string;
   editMode: boolean = false
   isLoading: boolean = false
   recipeForm: UntypedFormGroup;
@@ -64,7 +64,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.activeRoute.params.subscribe(
       (params: Params) => {
-        this.id = +params['id'];
+        this.id = params['id'];
         this.editMode = params['id'] != null;
         this.initForm();
       }
@@ -79,12 +79,18 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     let duration = '';
     if (this.editMode) {
       this.storeSub = this.store.select('recipes').pipe(map((recipeState) => {
-        return recipeState.recipes.find((recipe, index) => {
-          return index === this.id;
+        console.log(recipeState.recipes, this.id);
+        return recipeState.recipes.find((recipe) => {
+          return recipe.uid === this.id;
         });
       })).subscribe((recipeObj) => {
-        recipeName = recipeObj.name;
-        desc = recipeObj.description;
+        if (!recipeObj) {
+          setTimeout(() => this.onShowError('Recipe not found!'), 100);
+          setTimeout(() => this.router.navigate(['/'], { relativeTo: this.activeRoute }), 2000);
+        } else {
+          recipeName = recipeObj.name;
+          desc = recipeObj.description;
+        }
       });
     }
 
@@ -117,7 +123,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       images
     );
     if (this.editMode) {
-      this.store.dispatch(new UpdateRecipe({ index: this.id, recipe: newRecipe }));
+      this.store.dispatch(new UpdateRecipe({ uid: this.id, recipe: newRecipe }));
     } else {
       this.store.dispatch(new AddRecipe(newRecipe));
     }
@@ -173,7 +179,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         imageFile.onload = () => {
           file.width = imageFile.width;
           file.height = imageFile.height;
-          console.log(imageFile.width, imageFile.height);
         };
         this.previewFiles.push(file);
       }

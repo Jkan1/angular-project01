@@ -60,7 +60,6 @@ export class RecipeDetailComponent {
     ).subscribe((recipe) => {
       this.animationState = (this.animationState === 'normal') ? 'abnormal' : 'normal';
       this.recipeDetails = recipe;
-      console.log('this.recipeDetails', this.recipeDetails);
     });
   }
 
