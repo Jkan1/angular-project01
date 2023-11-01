@@ -45,7 +45,6 @@ export class RecipeDetailComponent {
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new FetchRecipes());
     this.animationState = 'normal';
     this.activeRoute.params.pipe(
       map((params: Params) => params['id']),
