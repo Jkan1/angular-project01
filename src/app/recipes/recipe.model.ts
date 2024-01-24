@@ -12,8 +12,8 @@ export class Recipe {
     public name: string;
     public description: string;
     public steps: string;
-    public level: number;
-    public duration: number;
+    public level: string;
+    public duration: string;
     public images: RecipeImage[];
     public createdBy: string;
     public likes: number;
@@ -22,9 +22,10 @@ export class Recipe {
         name: string,
         desc: string,
         steps: string,
-        level: number,
-        duration: number,
-        img: RecipeImage[]
+        level: string,
+        duration: string,
+        img: RecipeImage[],
+        uid?: string
     ) {
         this.name = name;
         this.description = desc;

@@ -1,5 +1,5 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ADD_RECIPE, FETCH_RECIPES, SetRecipe, STORE_RECIPES, ApiSuccess, ApiError, AddRecipe, FetchRecipes } from './recipe.actions';
+import { ADD_RECIPE, FETCH_RECIPES, SetRecipe, STORE_RECIPES, ApiSuccess, ApiError, AddRecipe, FetchRecipes, UPDATE_RECIPE } from './recipe.actions';
 import { switchMap, map, withLatestFrom, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Recipe } from '../recipe.model';
@@ -71,6 +71,28 @@ export class RecipeEffects {
             const payloadData = Object.assign({}, actionData.payload);
             payloadData.createdBy = userData.id;
             return this.httpClient.post(environment.dataBaseUrl + '?auth=' + userData?._token, payloadData)
+                .pipe(
+                    map(() => {
+                        return this.handleSuccess(0, {});
+                    }),
+                    catchError((errorRes) => {
+                        return of(this.handleError(errorRes));
+                    })
+                )
+        })
+    ), { dispatch: true });
+
+    updateRecipe = createEffect(() => this.action$.pipe(
+        ofType(UPDATE_RECIPE),
+        switchMap((actionData: AddRecipe) => {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (!userData || !userData.id || !userData._token) return of(this.handleError('Unauthorized'));
+            if (!actionData.payload.uid) return of(this.handleError('Error Occurred'));
+            const payloadData = Object.assign({}, actionData.payload);
+            payloadData.createdBy = userData.id;
+            const updateUrl = environment.dataBaseUrl.replace('.json', '/' + actionData.payload.uid + '.json')
+            console.log(updateUrl);
+            return this.httpClient.get(environment.dataBaseUrl + '?auth=' + userData?._token)//, payloadData)
                 .pipe(
                     map(() => {
                         return this.handleSuccess(0, {});

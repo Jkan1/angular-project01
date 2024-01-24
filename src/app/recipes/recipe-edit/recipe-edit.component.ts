@@ -90,6 +90,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         } else {
           recipeName = recipeObj.name;
           desc = recipeObj.description;
+          steps = recipeObj.steps;
+          level = recipeObj.level;
+          duration = recipeObj.duration;
+          this.previewFiles = recipeObj.images;
         }
       });
     }
@@ -120,7 +124,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       this.recipeForm.value['steps'],
       this.recipeForm.value['level'],
       this.recipeForm.value['duration'],
-      images
+      images,
+      this.id
     );
     if (this.editMode) {
       this.store.dispatch(new UpdateRecipe({ uid: this.id, recipe: newRecipe }));
@@ -137,7 +142,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         } else {
           this.onShowError('Success!');
           setTimeout(() => {
-            this.router.navigate(['../myrecipes'], { relativeTo: this.activeRoute });
+            this.router.navigate(['/recipes/myrecipes'], { relativeTo: this.activeRoute });
           }, 3000);
         }
       }

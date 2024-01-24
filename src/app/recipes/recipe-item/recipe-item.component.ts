@@ -24,7 +24,7 @@ const recipeAnimations = [
 export class RecipeItemComponent implements OnInit {
 
   @Input() recipe: Recipe;
-  @Input('index') recipeIndex: number;
+  @Input('editable') editable = false;
 
   constructor() { }
 
