@@ -32,8 +32,8 @@ const animations = [
     animations: animations
 })
 export class AuthComponent implements OnInit, OnDestroy {
-    isLoginMode: boolean = true;
-    isLoading: boolean = false;
+    isLoginMode = true;
+    isLoading = false;
     animationState = 'login'
     @ViewChild(AppPlaceholderDirective) alertHost: AppPlaceholderDirective;
 
@@ -79,7 +79,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             this.store.dispatch(new SignupStart({ email, password, userName, profileImage, inviteCode }));
         }
 
-        this.store.select('auth').subscribe((authState) => { });
+        this.store.select('auth').subscribe();
 
         authForm.reset();
     }

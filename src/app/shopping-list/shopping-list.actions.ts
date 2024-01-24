@@ -25,7 +25,6 @@ export class UpdateIng implements Action {
 
 export class DeleteIng implements Action {
     readonly type = DELETE_ING;
-    constructor() { }
 }
 
 export class StartEdit implements Action {

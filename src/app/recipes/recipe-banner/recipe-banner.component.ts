@@ -27,8 +27,6 @@ export class RecipeBannerComponent implements OnInit {
 
   animationState = '';
 
-  constructor() { }
-
   ngOnInit(): void {
     this.animationState = 'loaded';
   }

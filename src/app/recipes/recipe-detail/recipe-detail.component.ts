@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Recipe } from '../recipe.model';
 import { Store } from '@ngrx/store';
-import { AddIngMulti } from '../../shopping-list/shopping-list.actions';
-import { DeleteRecipe, FetchRecipes } from '../store/recipe.actions';
 import { AppState } from '../../store/app.reducer';
 import { map, switchMap } from 'rxjs/operators';
 import { trigger, transition, style, animate, state } from '@angular/animations';
@@ -66,10 +64,5 @@ export class RecipeDetailComponent {
   onEditRecipe() {
     this.routerService.navigate(['edit'], { relativeTo: this.activeRoute });
   }
-
-  // onDeleteRecipe() {
-  //   this.store.dispatch(new DeleteRecipe(this.id));
-  //   this.routerService.navigate(['/recipes']);
-  // }
 
 }

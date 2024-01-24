@@ -25,7 +25,7 @@ export function recipeReducer(state = initialState, action: RecipeActions) {
                 recipes: [...state.recipes],
                 loading: true
             };
-        case UPDATE_RECIPE:
+        case UPDATE_RECIPE: {
             const recipeIndex = state.recipes.findIndex(recipe => recipe.uid == action.payload.uid);
             const updatedRecipe = {
                 ...state.recipes[recipeIndex],
@@ -37,6 +37,7 @@ export function recipeReducer(state = initialState, action: RecipeActions) {
                 ...state,
                 recipes: newRecipes
             };
+        }
         case DELETE_RECIPE:
             return {
                 ...state,

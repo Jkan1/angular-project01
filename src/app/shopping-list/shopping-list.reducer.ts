@@ -29,7 +29,7 @@ export function shoppingListReducer(state: State = initialState, action: Shoppin
                 ...state,
                 ingredients: [...state.ingredients, ...action.payload]
             };
-        case ShoppingListAction.UPDATE_ING:
+        case ShoppingListAction.UPDATE_ING: {
             const existingIng = state.ingredients[state.editIndex];
             const updatedIng = {
                 ...existingIng,
@@ -43,6 +43,7 @@ export function shoppingListReducer(state: State = initialState, action: Shoppin
                 editIndex: -1,
                 editItem: null
             };
+        }
         case ShoppingListAction.DELETE_ING:
             return {
                 ...state,

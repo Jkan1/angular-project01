@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 export class HeaderComponent implements OnInit, OnDestroy {
 
     private authSubscription: Subscription;
-    isAuthenticated: boolean = false;
+    isAuthenticated = false;
     userName: string;
     profileImage: string = environment.sampleProfileImage;
 

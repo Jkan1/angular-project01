@@ -37,8 +37,8 @@ const animations = [
 export class RecipeEditComponent implements OnInit, OnDestroy {
 
   id: string;
-  editMode: boolean = false
-  isLoading: boolean = false
+  editMode = false
+  isLoading = false
   recipeForm: UntypedFormGroup;
   private storeSub: Subscription;
   private closeSub: Subscription;

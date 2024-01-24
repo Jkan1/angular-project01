@@ -21,7 +21,7 @@ export class RecipeEffects {
 
     private handleError = (errorRes) => {
         console.log(errorRes);
-        let eMessage = errorRes?.error?.error || "An Unknown Error Occured";
+        const eMessage = errorRes?.error?.error || "An Unknown Error Occured";
         return new ApiError(eMessage);
     }
 

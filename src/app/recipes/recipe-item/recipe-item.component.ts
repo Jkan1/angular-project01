@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Recipe } from '../recipe.model';
-import { animate, group, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 const recipeAnimations = [
@@ -21,13 +21,9 @@ const recipeAnimations = [
   styleUrls: ['./recipe-item.component.css'],
   animations: recipeAnimations
 })
-export class RecipeItemComponent implements OnInit {
+export class RecipeItemComponent {
 
   @Input() recipe: Recipe;
-  @Input('editable') editable = false;
-
-  constructor() { }
-
-  ngOnInit(): void { }
+  @Input() editable = false;
 
 }

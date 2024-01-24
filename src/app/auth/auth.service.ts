@@ -15,7 +15,7 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    private tokenExpTimer: any;
+    private tokenExpTimer;
 
     constructor(private store: Store<AppState>) { }
 

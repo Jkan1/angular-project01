@@ -21,7 +21,7 @@ export class AuthEffects {
     private verificationUrl = environment.veryUserIdentityUrl + environment.firebaseApiKey;
 
     private handleAuthentication = (expiresIn, email, localId, idToken, isVerified, userName, profileImage) => {
-        let expiryDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
+        const expiryDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
         const newUser = new User(email, localId, idToken, expiryDate, isVerified, userName, profileImage);
         localStorage.setItem('userData', JSON.stringify(newUser));
         this.authService.setLogoutTimer(+expiresIn * 1000);
@@ -74,7 +74,7 @@ export class AuthEffects {
         ofType(SIGNUP_START),
         switchMap((signupAction: SignupStart) => {
             const inviteCode = signupAction.payload.inviteCode?.split('-')[0];
-            return this.httpClient.get<Boolean>(environment.inviteCodeUrl + inviteCode + '.json')
+            return this.httpClient.get<boolean>(environment.inviteCodeUrl + inviteCode + '.json')
                 .pipe(
                     switchMap((response) => {
                         if (response === true)
@@ -88,9 +88,9 @@ export class AuthEffects {
                                 returnSecureToken: true
                             }).pipe(
                                 switchMap((resData) => {
-                                    return this.httpClient.put<Boolean>(environment.inviteCodeUrl + inviteCode + '.json?auth=' + resData.idToken, true)
+                                    return this.httpClient.put<boolean>(environment.inviteCodeUrl + inviteCode + '.json?auth=' + resData.idToken, true)
                                         .pipe(
-                                            switchMap((response) => {
+                                            switchMap(() => {
                                                 const localId = resData.localId;
                                                 const idToken = resData.idToken;
                                                 const email = resData.email;
@@ -222,7 +222,7 @@ export class AuthEffects {
             );
 
             if (loadedUser.token) {
-                let newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
+                const newExpTime = new Date(userData._tokenExpiry).getTime() - new Date().getTime();
                 this.authService.setLogoutTimer(newExpTime);
                 return new AuthSuccess({
                     email: loadedUser.email,
@@ -247,7 +247,7 @@ export class AuthEffects {
                 requestType: 'VERIFY_EMAIL',
                 idToken: sendEmailAction.payload.idToken
             }).pipe(
-                map((result) => {
+                map(() => {
                     return new SendEmailSuccess();
                 }),
                 catchError((errorRes) => {
@@ -279,7 +279,7 @@ export class AuthEffects {
     
     userVerifySuccess = createEffect(() => this.action$.pipe(
         ofType(VERIFY_SUCCESS),
-        switchMap((resData) => {
+        switchMap(() => {
             const userData = JSON.parse(localStorage.getItem('userData'));
             const localId = userData.id;
             const idToken = userData._token;

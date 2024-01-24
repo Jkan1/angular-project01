@@ -15,7 +15,7 @@ const initialState: State = {
 
 export function authReducer(state = initialState, action: AuthActions) {
     switch (action.type) {
-        case AUTH_SUCCESS:
+        case AUTH_SUCCESS: {
             const newUser = new User(
                 action.payload.email,
                 action.payload.userId,
@@ -30,7 +30,8 @@ export function authReducer(state = initialState, action: AuthActions) {
                 authError: null,
                 user: newUser,
                 loading: false
-            }
+            };
+        }
         case LOGIN_START:
         case SIGNUP_START:
             return {
@@ -50,7 +51,7 @@ export function authReducer(state = initialState, action: AuthActions) {
                 authError: null,
                 user: null
             }
-        case VERIFY_SUCCESS:
+        case VERIFY_SUCCESS: {
             const verifiedUser = new User(
                 state.user.email,
                 state.user.id,
@@ -64,6 +65,7 @@ export function authReducer(state = initialState, action: AuthActions) {
                 ...state,
                 user: verifiedUser
             };
+        }
         case VERIFY_START:
             return {
                 ...state,

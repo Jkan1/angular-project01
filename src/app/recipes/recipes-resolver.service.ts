@@ -1,6 +1,4 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { Recipe } from "./recipe.model";
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
 import { Actions, ofType } from '@ngrx/effects';
@@ -16,7 +14,7 @@ export class RecipesResolver  {
         private actions$: Actions
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    resolve() {
         return this.store.select('recipes').pipe(
             take(1),
             map((recipesState => {

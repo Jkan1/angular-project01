@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -10,7 +10,7 @@ export class AuthGuard  {
 
     constructor(private router: Router, private store: Store<AppState>) { }
 
-    canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot)
+    canActivate()
         : boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
         return this.store.select('auth').pipe(take(1),
         map((authState) => {
@@ -18,7 +18,7 @@ export class AuthGuard  {
         }),
         map(
             (data) => { 
-                let isAuth = !!data;
+                const isAuth = !!data;
                 if (isAuth) {
                     return true;
                 }

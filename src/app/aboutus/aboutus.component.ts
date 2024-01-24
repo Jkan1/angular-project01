@@ -35,8 +35,6 @@ export class AboutUsComponent implements OnInit {
   editedItem: Ingredient;
   animationState = '';
 
-  constructor() { }
-
   ngOnInit() {
     this.animationState = 'loading';
   }

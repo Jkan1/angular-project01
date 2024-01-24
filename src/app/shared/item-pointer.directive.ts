@@ -5,8 +5,6 @@ import { HostBinding, Directive } from '@angular/core';
 })
 export class ItemPointerDirective {
 
-    @HostBinding('style.cursor') cursor: string = 'pointer';
-
-    constructor() { }
+    @HostBinding('style.cursor') cursor = 'pointer';
 
 }
